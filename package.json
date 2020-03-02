@@ -1,0 +1,30 @@
+{
+  "name": "TijaraShop-Caisse",
+  "version": "0.0.1",
+  "description": "TijaraShop's caisse",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dscalzi/HeliosLauncher.git"
+  },
+  "keywords": [],
+  "author": "Romuald Detrait",
+  "devDependencies": {
+    "electron": "^8.0.2",
+    "livereload": "^0.9.1"
+  },
+  "dependencies": {
+    "@hyperapp/html": "^0.5.1",
+    "connect": "^3.7.0",
+    "ejs": "^3.0.1",
+    "ejs-electron": "^2.0.3",
+    "electron-devtools-installer": "^2.2.0",
+    "hyperapp": "^1.0.1",
+    "hyperapp-redux-devtools": "^1.1.2",
+    "jquery": "^3.4.1",
+    "serve-static": "^1.14.1"
+  }
+}
