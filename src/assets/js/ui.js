@@ -1,10 +1,17 @@
 const $ = require('jquery')
-const {ipcRenderer, remote, shell, webFrame} = require('electron')
+
+const { ipcRenderer, remote, shell, webFrame} = require('electron')
 const LoggerUtil = require('./assets/js/loggerutil')
 const loggerUICore = LoggerUtil('%c[UICore]', 'color: #000668; font-weight: bold')
 const loggerAutoUpdater = LoggerUtil('%c[AutoUpdater]', 'color: #000668; font-weight: bold')
 const loggerAutoUpdaterSuccess = LoggerUtil('%c[AutoUpdater]', 'color: #209b07; font-weight: bold')
-const ejs = require('ejs');
+const ejs = require('ejs')
+const path = require('path')
+
+var main;
+var plop = "coucou"
+const loginPage = path.join(__dirname, 'login.ejs')
+const adminPage = path.join(__dirname, "admin.ejs")
 
 process.traceProcessWarnings = true
 process.traceDeprecation = true
@@ -69,13 +76,14 @@ $(document).on('click', 'a[href^="http"]', function (event) {
 })
 
 $(document).ready(function () {
-
-    ejs.renderFile(path.join(__dirname, 'login.ejs'), {}, {}, (err, str) => {
+    main = $("#main")
+    ejs.renderFile(loginPage, {}, {}, (err, str) => {
         if (err) {
             console.log(err)
         } else {
-            $("#main").html(str)
+            $("#main").append(str)
         }
     })
+
 })
 

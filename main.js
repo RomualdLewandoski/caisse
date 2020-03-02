@@ -44,7 +44,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-   mainWindow.webContents.openDevTools()
+   /**mainWindow.webContents.openDevTools()**/
 
   /**
    * Can be switched to FULL SCREEN F11 with

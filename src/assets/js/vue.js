@@ -1,6 +1,3 @@
-
-const path = require('path')
-
 // Mapping of each view to their container IDs.
 const VIEWS = {
     landing: '#landingContainer',

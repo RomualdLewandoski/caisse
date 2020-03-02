@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
 </head>
 <body bkid="<%= bkid %>">
-<% include frame.ejs %>
+<%- include("frame.ejs", {plop: "coucou"}) %>
 <div id="main">
     <% //include login.ejs %>
     <% //include admin.ejs %>
