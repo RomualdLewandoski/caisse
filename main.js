@@ -35,8 +35,7 @@ function createWindow () {
     backgroundColor: '#171614'
   })
 
-  ejse.data('bkid', Math.floor((Math.random() * fs.readdirSync(path.join(__dirname, 'src', 'assets', 'images', 'backgrounds')).length)))
-
+  ejse.data('bkid', Math.floor((Math.random() * fs.readdirSync(path.join(__dirname, 'src', 'assets')).length)))
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'src', 'app.ejs'),
@@ -45,7 +44,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  /** mainWindow.webContents.openDevTools() **/
+   mainWindow.webContents.openDevTools()
 
   /**
    * Can be switched to FULL SCREEN F11 with
