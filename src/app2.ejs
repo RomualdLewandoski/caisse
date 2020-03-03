@@ -1,0 +1,41 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>TijaraShop</title>
+    <script src="./assets/js/ui.js"></script>
+    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="./assets/css/launcher.css">
+    <link type="text/css" rel="stylesheet" href="./assets/css/custom.css">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css"
+          media="all">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css"
+          media="all">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+</head>
+<body bkid="<%= bkid %>">
+<% include frame.ejs %>
+<div id="main">
+    <% //include login.ejs  %>
+    <% //include admin.ejs  %>
+</div>
+<div id="loadingContainer">
+    <div id="loadingContent">
+        <div class="loader">
+            <h2 class="animate">Initialisation de la caisse ...</h2>
+        </div>
+    </div>
+</div>
+<!--<script src="http://localhost:35729/livereload.js?snipver=1"></script>-->
+<script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+        ':35729/livereload.js?snipver=1"></' + 'script>');
+</script>
+
+<script src="./assets/js/bootstrap.bundle.js"></script>
+
+<script src="./assets/js/vue.js"></script>
+
+
+</body>
+</html>

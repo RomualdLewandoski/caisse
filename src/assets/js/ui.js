@@ -1,6 +1,6 @@
 const $ = require('jquery')
 
-const { ipcRenderer, remote, shell, webFrame} = require('electron')
+const {ipcRenderer, remote, shell, webFrame} = require('electron')
 const LoggerUtil = require('./assets/js/loggerutil')
 const loggerUICore = LoggerUtil('%c[UICore]', 'color: #000668; font-weight: bold')
 const loggerAutoUpdater = LoggerUtil('%c[AutoUpdater]', 'color: #000668; font-weight: bold')
@@ -10,8 +10,8 @@ const path = require('path')
 
 var main;
 var plop = "coucou"
-const loginPage = path.join(__dirname, 'login.ejs')
-const adminPage = path.join(__dirname, "admin.ejs")
+const loginPage = path.join(__dirname,"vue", 'login.ejs')
+const adminPage = path.join(__dirname,"vu",  "admin.ejs")
 
 process.traceProcessWarnings = true
 process.traceDeprecation = true
@@ -76,14 +76,14 @@ $(document).on('click', 'a[href^="http"]', function (event) {
 })
 
 $(document).ready(function () {
+    console.log("READY")
     main = $("#main")
     ejs.renderFile(loginPage, {}, {}, (err, str) => {
+        console.log(str)
         if (err) {
             console.log(err)
         } else {
             $("#main").append(str)
         }
     })
-
 })
-

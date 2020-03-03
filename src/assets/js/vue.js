@@ -59,4 +59,4 @@ function showMainUi(data) {
     disableLoader()
 }
 
-setTimeout(() => showMainUi(), 2000)
+//setTimeout(() => showMainUi(), 2000)

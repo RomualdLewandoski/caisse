@@ -1,42 +1,68 @@
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8"/>
+<!DOCTYPE html>
+<html lang="en">
 
-    <title>TijaraShop</title>
-    <script src="./assets/js/ui.js"></script>
-    <link type="text/css" rel="stylesheet" href="./assets/css/bootstrap.css">
-    <link type="text/css" rel="stylesheet" href="./assets/css/launcher.css">
-    <link type="text/css" rel="stylesheet" href="./assets/css/custom.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Perfect Admin - Responsive HTML5 Admin Template</title>
+    <meta name="keywords" content="HTML5 Admin Template"/>
+    <meta name="description" content="Perfect Admin - Responsive HTML5 Admin Template">
+    <meta name="author" content="perfectusinc.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Google Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.min.css">
+    <!-- Custom CSS Starts -->
+    <link rel="stylesheet" href="assets/css/skin/all-skins.css">
+    <link rel="stylesheet" href="assets/css/general/style.css">
+    <link rel="stylesheet" href="assets/css/sidebar/side-nav.css">
+    <link rel="stylesheet" href="assets/css/fonts/fonts-style.css">
+    <link rel="stylesheet" href="assets/css/nanoscroller/nanoscroller.css">
+    <!-- Page CSS -->
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css"
           media="all">
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css"
           media="all">
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+    <link type="text/css" rel="stylesheet" href="./assets/css/launcher.css">
+    <link rel="stylesheet" href="./assets/css/custom.css">
+    <script src="./assets/js/ui.js"></script>
+    <script src="./assets/js/vue.js"></script>
 </head>
-<body bkid="<%= bkid %>">
-<%- include("frame.ejs", {plop: "coucou"}) %>
-<div id="main">
-    <% //include login.ejs %>
-    <% //include admin.ejs %>
-</div>
-<% //include overlay.ejs  %>
-<div id="loadingContainer">
-    <div id="loadingContent">
-        <div class="loader">
-            <h2 class="animate">Initialisation de la caisse ...</h2>
+
+<body class="sidebar-mini fixed skin-blue">
+<div class="wrapper">
+    <% include vue/navbar.ejs %>
+    <% include vue/leftbar.ejs %>
+    <!-- Page Content Starts -->
+    <div class="content-wrapper text-black-50">
+        <div id="main">
+            <!--todo ici viendra le loading-->
+
         </div>
     </div>
+    <a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+
 </div>
-<!--<script src="http://localhost:35729/livereload.js?snipver=1"></script>-->
-<script>
-    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
-        ':35729/livereload.js?snipver=1"></' + 'script>');
-</script>
 
-<script src="./assets/js/bootstrap.bundle.js"></script>
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="assets/js/jquery/slim.min.js"></script>
+<script src="assets/js/jquery/jquery.min.js"></script>
 
-<script src="./assets/js/vue.js"></script>
-
-
+<!-- Popper.JS -->
+<script src="assets/js/jquery/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="assets/js/bootstrap/bootstrap.min.js"></script>
+<!-- Page JS -->
+<script src="assets/js/charts/Chart.bundle.min.js"></script>
+<script src="assets/js/charts/bar/grouped-bar-chart.js"></script>
+<script src="assets/js/charts/pie/doughnut-chart-multiline.js"></script>
+<script src="assets/js/dashboard/dashboard1.js"></script>
+<!-- Theme JS -->
+<script src="assets/js/nanoscroller/nanoscroller.js"></script>
+<script src="assets/js/custom/theme.js"></script>
 </body>
+
+
 </html>

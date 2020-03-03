@@ -1,8 +1,8 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const Menu = require('electron').Menu
-const fs                            = require('fs')
+const fs = require('fs')
 
-const { default: installExtension, REDUX_DEVTOOLS } = require('electron-devtools-installer')
+const {default: installExtension, REDUX_DEVTOOLS} = require('electron-devtools-installer')
 
 const ejse = require('ejs-electron')
 const path = require('path')
@@ -22,61 +22,63 @@ livereload.watch([
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 960,
-    height: 552,
-    frame: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
-    },
-    backgroundColor: '#171614'
-  })
+function createWindow() {
+    // Create the browser window.
+    mainWindow = new BrowserWindow({
+        width: 960,
+        height: 552,
+        minWidth: 600,
+        minHeight: 300,
+        frame: false,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        },
+        backgroundColor: '#171614'
+    })
 
-  ejse.data('bkid', Math.floor((Math.random() * fs.readdirSync(path.join(__dirname, 'src', 'assets')).length)))
-  // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'src', 'app.ejs'),
-    protocol: 'file:',
-    slashes: true
-  }))
+    ejse.data('bkid', Math.floor((Math.random() * fs.readdirSync(path.join(__dirname, 'src', 'assets')).length)))
+    // and load the index.html of the app.
+    mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'src', 'app.ejs'),
+        protocol: 'file:',
+        slashes: true
+    }))
 
-  // Open the DevTools.
-   /**mainWindow.webContents.openDevTools()**/
+    // Open the DevTools.
+    /**mainWindow.webContents.openDevTools()**/
 
-  /**
-   * Can be switched to FULL SCREEN F11 with
-   *  mainWindow.setFullScreen(true)
-   * Menu can be hide by using
-   * mainWindow.removeMenu()
-   * Can be maximzed with
-   * mainWindow.maximise()
-   */
-  mainWindow.maximize()
+    /**
+     * Can be switched to FULL SCREEN F11 with
+     *  mainWindow.setFullScreen(true)
+     * Menu can be hide by using
+     * mainWindow.removeMenu()
+     * Can be maximzed with
+     * mainWindow.maximise()
+     */
+    mainWindow.maximize()
 
-  installExtension(REDUX_DEVTOOLS)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log('An error occurred: ', err));
+    installExtension(REDUX_DEVTOOLS)
+        .then((name) => console.log(`Added Extension:  ${name}`))
+        .catch((err) => console.log('An error occurred: ', err));
 
 
-  mainWindow.on('closed', function () {
-    mainWindow = null
-  })
+    mainWindow.on('closed', function () {
+        mainWindow = null
+    })
 }
 
 app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+    if (process.platform !== 'darwin') {
+        app.quit()
+    }
 })
 
 app.on('activate', function () {
-  if (mainWindow === null) {
-    createWindow()
-  }
+    if (mainWindow === null) {
+        createWindow()
+    }
 })
