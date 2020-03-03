@@ -8,10 +8,12 @@ const loggerAutoUpdaterSuccess = LoggerUtil('%c[AutoUpdater]', 'color: #209b07; 
 const ejs = require('ejs')
 const path = require('path')
 
+const isDev = true;
+
 var main;
 var plop = "coucou"
-const loginPage = path.join(__dirname,"vue", 'login.ejs')
-const adminPage = path.join(__dirname,"vu",  "admin.ejs")
+const loginPage = path.join(__dirname, "vue", 'login.ejs')
+const adminPage = path.join(__dirname, "vu", "admin.ejs")
 
 process.traceProcessWarnings = true
 process.traceDeprecation = true
@@ -76,14 +78,46 @@ $(document).on('click', 'a[href^="http"]', function (event) {
 })
 
 $(document).ready(function () {
-    console.log("READY")
-    main = $("#main")
-    ejs.renderFile(loginPage, {}, {}, (err, str) => {
-        console.log(str)
-        if (err) {
-            console.log(err)
-        } else {
-            $("#main").append(str)
-        }
-    })
+
+    if (!isDev) {
+        var counter = 0;
+        var c = 0;
+        var i = setInterval(function () {
+            $(".loading-page .counter h1").html(c + "%");
+            $(".loading-page .counter hr").css("width", c + "%");
+
+            counter++;
+            c++;
+
+            if (counter == 101) {
+                clearInterval(i);
+                $('.loading-page').fadeOut(500)
+                $('.app-content').fadeIn(500)
+                main = $("#main")
+                ejs.renderFile(loginPage, {}, {}, (err, str) => {
+                    console.log(str)
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        $("#main").append(str)
+                    }
+                })
+            }
+        }, 50);
+
+    } else {
+        $('.loading-page').fadeOut(500)
+        $('.app-content').fadeIn(500)
+        main = $("#main")
+        ejs.renderFile(loginPage, {}, {}, (err, str) => {
+            console.log(str)
+            if (err) {
+                console.log(err)
+            } else {
+                $("#main").append(str)
+            }
+        })
+    }
+
+
 })

@@ -20,12 +20,19 @@
 }
 
 #loginContainer{
-    margin-top: 15%;
+/*    margin-top: 5%;*/
+
 }
 
 /* Main login container. */
 #loginContainer {
-    position: relative;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 230px;
+    right: 0;
+
+    margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,4 +59,48 @@
 .main-footer{
     background: rgb(126,137,142)!important;
     background: linear-gradient(327deg, rgba(126,137,142,1) 0%, rgba(233,235,239,1) 100%);
+}
+.loading-page {
+    /*margin-left: -24px;
+    margin-top: -45px;*/
+    background: #0d0d0d;
+    width: 100vw;
+    height: 100vh;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.loading-page .counter {
+    text-align: center;
+}
+.loading-page .counter p {
+    font-size: 20px;
+    color: #f60d54;
+}
+.loading-page .counter h1 {
+    color: white;
+    font-size: 60px;
+    margin-top: -10px;
+}
+.loading-page .counter hr {
+    background: #f60d54;
+    border: none;
+    height: 1px;
+}
+.loading-page .counter {
+    position: relative;
+    width: 500px;
+}
+.loading-page .counter h1.abs {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.loading-page .counter .color {
+    width: 0px;
+    overflow: hidden;
+    color: #f60d54;
 }
