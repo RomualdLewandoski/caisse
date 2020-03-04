@@ -8,7 +8,7 @@ const loggerAutoUpdaterSuccess = LoggerUtil('%c[AutoUpdater]', 'color: #209b07; 
 const ejs = require('ejs')
 const path = require('path')
 
-const isDev = true;
+const isDev = false;
 
 var main;
 var plop = "coucou"
