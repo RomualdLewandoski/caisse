@@ -1,9 +1,19 @@
-const $                                      = require('jquery')
+const $ = require('jquery')
+
 const {ipcRenderer, remote, shell, webFrame} = require('electron')
-const LoggerUtil                             = require('./assets/js/loggerutil')
-const loggerUICore             = LoggerUtil('%c[UICore]', 'color: #000668; font-weight: bold')
-const loggerAutoUpdater        = LoggerUtil('%c[AutoUpdater]', 'color: #000668; font-weight: bold')
+const LoggerUtil = require('./assets/js/loggerutil')
+const loggerUICore = LoggerUtil('%c[UICore]', 'color: #000668; font-weight: bold')
+const loggerAutoUpdater = LoggerUtil('%c[AutoUpdater]', 'color: #000668; font-weight: bold')
 const loggerAutoUpdaterSuccess = LoggerUtil('%c[AutoUpdater]', 'color: #209b07; font-weight: bold')
+const ejs = require('ejs')
+const path = require('path')
+
+const isDev = true;
+
+var main;
+var plop = "coucou"
+const loginPage = path.join(__dirname, "vue", 'login.ejs')
+const adminPage = path.join(__dirname, "vu", "admin.ejs")
 
 process.traceProcessWarnings = true
 process.traceDeprecation = true
@@ -23,8 +33,8 @@ webFrame.setZoomLevel(0)
 webFrame.setVisualZoomLevelLimits(1, 1)
 webFrame.setLayoutZoomLevelLimits(0, 0)
 
-document.addEventListener('readystatechange', function() {
-    if (document.readyState === 'interactive'){
+document.addEventListener('readystatechange', function () {
+    if (document.readyState === 'interactive') {
         loggerUICore.log('UICore Initializing..')
 
         //Bind close button
@@ -36,10 +46,10 @@ document.addEventListener('readystatechange', function() {
         })
 
         //Bind restore down button
-        Array.from(document.getElementsByClassName('fRb')).map((val) =>{
-            val.addEventListener('click', e =>{
+        Array.from(document.getElementsByClassName('fRb')).map((val) => {
+            val.addEventListener('click', e => {
                 const window = remote.getCurrentWindow();
-                if(window.isMaximized()){
+                if (window.isMaximized()) {
                     window.unmaximize()
                 } else {
                     window.maximize()
@@ -62,7 +72,52 @@ document.addEventListener('readystatechange', function() {
 /**
  * Open web links in the user's default browser.
  */
-$(document).on('click', 'a[href^="http"]', function(event) {
+$(document).on('click', 'a[href^="http"]', function (event) {
     event.preventDefault()
     shell.openExternal(this.href)
+})
+
+$(document).ready(function () {
+
+    if (!isDev) {
+        var counter = 0;
+        var c = 0;
+        var i = setInterval(function () {
+            $(".loading-page .counter h1").html(c + "%");
+            $(".loading-page .counter hr").css("width", c + "%");
+
+            counter++;
+            c++;
+
+            if (counter == 101) {
+                clearInterval(i);
+                $('.loading-page').fadeOut(500)
+                $('.app-content').fadeIn(500)
+                main = $("#main")
+                ejs.renderFile(loginPage, {}, {}, (err, str) => {
+                    console.log(str)
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        $("#main").append(str)
+                    }
+                })
+            }
+        }, 50);
+
+    } else {
+        $('.loading-page').fadeOut(500)
+        $('.app-content').fadeIn(500)
+        main = $("#main")
+        ejs.renderFile(loginPage, {}, {}, (err, str) => {
+            console.log(str)
+            if (err) {
+                console.log(err)
+            } else {
+                $("#main").append(str)
+            }
+        })
+    }
+
+
 })
