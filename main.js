@@ -1,6 +1,7 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const Menu = require('electron').Menu
 const fs = require('fs')
+const { localStorage, sessionStorage } = require('electron-browser-storage');
 
 const {default: installExtension, REDUX_DEVTOOLS} = require('electron-devtools-installer')
 
@@ -17,12 +18,12 @@ livereload.watch([
     __dirname + "/src/css",
     __dirname + "/src"
 ])
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
 function createWindow() {
+
     // Create the browser window.
     mainWindow = new BrowserWindow({
         width: 960,
@@ -68,7 +69,12 @@ function createWindow() {
     })
 }
 
-app.on('ready', createWindow)
+app.on('ready', () => {
+    createWindow()
+    localStorage.clear()
+})
+
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {

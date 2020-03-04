@@ -16,7 +16,7 @@
 
             <div id="frameButtonDockWin" style="display: flex; ">
 
-                <div class="navbar-custom-menu">
+                <div class="navbar-custom-menu" id="loggedNav" style="display: none">
                     <ul class="nav navbar-nav">
                         <li class="dropdown d-none d-lg-block">
                             <input class="custom-control" type="text">
@@ -25,15 +25,13 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="assets/images/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="d-none d-sm-block">Admin</span>
+                                <span class="d-none d-sm-block" id="loggedName"></span>
                             </a>
                             <ul class="dropdown-menu text-black">
                                 <!-- User Image Starts -->
                                 <li class="user-header text-black">
                                     <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                    <p>
-                                        Alexander Pierce
-                                        <small>Member since Nov. 2012</small>
+                                    <p id="loggedSubBox">
                                     </p>
                                 </li>
                                 <!-- User Image Ends -->

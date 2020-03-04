@@ -1,14 +1,16 @@
 const $ = require('jquery')
-
+const jQuery = require('jquery')
+const jQueryUi = require('jquery-ui-dist/jquery-ui')
 const {ipcRenderer, remote, shell, webFrame} = require('electron')
 const LoggerUtil = require('./assets/js/loggerutil')
 const loggerUICore = LoggerUtil('%c[UICore]', 'color: #000668; font-weight: bold')
 const loggerAutoUpdater = LoggerUtil('%c[AutoUpdater]', 'color: #000668; font-weight: bold')
 const loggerAutoUpdaterSuccess = LoggerUtil('%c[AutoUpdater]', 'color: #209b07; font-weight: bold')
+const loggerLogin = LoggerUtil('%c[Login]', 'color: #000668; font-weight: bold')
 const ejs = require('ejs')
 const path = require('path')
-
-const isDev = false;
+const swal = require('./assets/js/sweetalert2.min.js')
+const isDev = true;
 
 var main;
 var plop = "coucou"
@@ -78,6 +80,14 @@ $(document).on('click', 'a[href^="http"]', function (event) {
 })
 
 $(document).ready(function () {
+    if (localStorage.getItem('user')) {
+        $('#loggedName').html(localStorage.getItem('user'))
+        $('#loggedSubBox').html(localStorage.getItem('user') + "<small>" + localStorage.getItem('perms') + "</small>")
+        $('#loggedNav').show()
+        if (localStorage.getItem('perms') ==  999) {
+            $('#adminNav').show()
+        }
+    }
 
     if (!isDev) {
         var counter = 0;
@@ -110,7 +120,6 @@ $(document).ready(function () {
         $('.app-content').fadeIn(500)
         main = $("#main")
         ejs.renderFile(loginPage, {}, {}, (err, str) => {
-            console.log(str)
             if (err) {
                 console.log(err)
             } else {
