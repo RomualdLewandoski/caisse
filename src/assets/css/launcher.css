@@ -77,6 +77,7 @@ body, button {
 
 /* Flexbox to wrap the main frame content. */
 #frameMain {
+    background-color: #66bb6a;
     display: flex;
     height: 35px
 }

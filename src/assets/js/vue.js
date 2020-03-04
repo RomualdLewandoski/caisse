@@ -1,6 +1,4 @@
-
 const path = require('path')
-
 // Mapping of each view to their container IDs.
 const VIEWS = {
     landing: '#landingContainer',
@@ -27,6 +25,7 @@ function switchView(current, next, currentFadeTime = 1, nextFadeTime = 1, onCurr
 }, onNextFade = () => {
 }) {
     currentView = next
+    ejse.data("vue", next)
     $(`${current}`).fadeOut(currentFadeTime, () => {
         onCurrentFade()
         $(`${next}`).fadeIn(nextFadeTime, () => {
