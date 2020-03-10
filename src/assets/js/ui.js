@@ -11,11 +11,15 @@ const ejs = require('ejs')
 const path = require('path')
 const swal = require('./assets/js/sweetalert2.min.js')
 const isDev = true;
-
+const resizable = require('jquery-resizable-dom/dist/jquery-resizable')
+const chosen = require('chosen-js/chosen.jquery')
 var main;
-var plop = "coucou"
+var version;
 const loginPage = path.join(__dirname, "vue", 'login.ejs')
-const adminPage = path.join(__dirname, "vu", "admin.ejs")
+const adminPage = path.join(__dirname, "vue", "admin.ejs")
+
+
+
 
 process.traceProcessWarnings = true
 process.traceDeprecation = true
@@ -88,8 +92,20 @@ $(document).ready(function () {
             $('#adminNav').show()
         }
     }
-
-    if (!isDev) {
+    if (localStorage.getItem('vue')){
+        var page = localStorage.getItem('vue')
+        var obj = JSON.parse(page)
+        $('.loading-page').hide()
+        $('.app-content').show()
+        ejs.renderFile(obj.page, {}, {}, (err, str) => {
+            if (err) {
+                console.log(err)
+            } else {
+                $("#main").append(str)
+                $(obj.div).show()
+            }
+        })
+    }else if (!isDev) {
         var counter = 0;
         var c = 0;
         var i = setInterval(function () {
@@ -127,6 +143,14 @@ $(document).ready(function () {
             }
         })
     }
+    ipcRenderer.send('app_version')
+    ipcRenderer.on('app_version', (event, arg) => {
+        ipcRenderer.removeAllListeners('app_version')
+        console.log(arg.version)
+        version = arg.version
+        $("#version").text("Version " + version)
+    })
+
 
 
 })

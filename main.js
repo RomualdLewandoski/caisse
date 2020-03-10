@@ -1,23 +1,26 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 const Menu = require('electron').Menu
 const fs = require('fs')
-const { localStorage, sessionStorage } = require('electron-browser-storage');
+const {localStorage, sessionStorage} = require('electron-browser-storage');
 
 const {default: installExtension, REDUX_DEVTOOLS} = require('electron-devtools-installer')
 
 const ejse = require('ejs-electron')
 const path = require('path')
 const url = require('url')
+const isDev = require('./src/scripts/isDev')
+const { autoUpdater } = require('electron-updater')
+
+
+if (isDev) {
+    console.log("Devmod enabled")
+} else {
+    console.log("You are not in dev mod")
+}
 
 
 // Reload index.html everytime the source files change
-const livereload = require('livereload').createServer()
-livereload.watch(path.join(__dirname))
-livereload.watch([
-    __dirname + "/src/js",
-    __dirname + "/src/css",
-    __dirname + "/src"
-])
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -28,8 +31,8 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 960,
         height: 552,
-        minWidth: 600,
-        minHeight: 300,
+        minWidth: 720,
+        minHeight: 500,
         frame: false,
         webPreferences: {
             nodeIntegration: true,
@@ -67,13 +70,21 @@ function createWindow() {
     mainWindow.on('closed', function () {
         mainWindow = null
     })
+    if (!isDev) {
+        mainWindow.webContents.on("devtools-opened", () => {
+            mainWindow.webContents.closeDevTools();
+        });
+    }
+
+    mainWindow.once('ready-to-show', () => {
+        autoUpdater.checkForUpdatesAndNotify()
+    })
 }
 
 app.on('ready', () => {
     createWindow()
     localStorage.clear()
 })
-
 
 
 // Quit when all windows are closed.
@@ -88,3 +99,19 @@ app.on('activate', function () {
         createWindow()
     }
 })
+
+ipcMain.on('app_version', (event) => {
+    event.sender.send('app_version', {version: app.getVersion()})
+})
+
+
+autoUpdater.on('update-available', () => {
+    mainWindow.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+    mainWindow.webContents.send('update_downloaded');
+});
+
+ipcMain.on('restart_app', () => {
+    autoUpdater.quitAndInstall();
+});

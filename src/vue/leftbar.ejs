@@ -15,9 +15,9 @@
 								</span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Articles</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Fournisseurs</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Clients</a></li>
+                            <li><a href="#" id="navArticlesList"><i class="fa fa-circle-o"></i> Articles</a></li>
+                            <li><a href="#" id="navFournisseursList"><i class="fa fa-circle-o"></i> Fournisseurs</a></li>
+                            <li><a href="#" id="navClientsList"><i class="fa fa-circle-o"></i> Clients</a></li>
                         </ul>
                     </li>
                     <li>
@@ -74,7 +74,12 @@
                             <span>paramètres</span>
                         </a>
                     </li>
-
+                    <li id="notification" class="hidden">
+                        <a href="#" onclick="doUpdate()">
+                            <i class="fas fa-wrench"></i>
+                            <span>Mise a jour</span>
+                        </a>
+                    </li>
 
                     <!--<li class="header">LABELS</li>
                     <li><a href="#"><i class="fa fa-circle-o text-danger"></i> <span>Important</span></a></li>
@@ -86,5 +91,6 @@
             </ul>
         </div>
     </div>
+    <script src="assets/js/scripts/AdminLeftbar.js"></script>
 </aside>
 <!-- Sidebar Section Ends -->

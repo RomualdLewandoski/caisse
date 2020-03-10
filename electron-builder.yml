@@ -1,0 +1,4 @@
+appId: com.github.romualdlewandoski.caisse
+publish:
+    provider: github
+    token: 25dafb59c708c25514db4f0ce4f66733e9e6d2a0
