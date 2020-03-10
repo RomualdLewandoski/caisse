@@ -1,20 +1,3 @@
-const notification = document.getElementById('notification');
-const restartButton = document.getElementById('restart-button');
-
-ipcRenderer.on('update_available', () => {
-    ipcRenderer.removeAllListeners('update_available');
-    notification.classList.remove('hidden');
-});
-ipcRenderer.on('update_downloaded', () => {
-    ipcRenderer.removeAllListeners('update_downloaded');
-    restartButton.classList.remove('hidden');
-    notification.classList.remove('hidden');
-});
-
-function doUpdate() {
-    ipcRenderer.send('restart_app');
-}
-
 function isAdmin() {
     if (localStorage.getItem('perms') == 999) {
         return true;

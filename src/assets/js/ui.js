@@ -48,7 +48,6 @@ document.addEventListener('readystatechange', function () {
             val.addEventListener('click', e => {
                 const window = remote.getCurrentWindow()
                 window.close()
-                app.quit();
             })
         })
 

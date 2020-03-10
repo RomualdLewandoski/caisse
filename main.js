@@ -62,28 +62,28 @@ function createWindow() {
      */
     mainWindow.maximize()
 
-    installExtension(REDUX_DEVTOOLS)
-        .then((name) => console.log(`Added Extension:  ${name}`))
-        .catch((err) => console.log('An error occurred: ', err));
-
-
     mainWindow.on('closed', function () {
         mainWindow = null
+        app.quit()
     })
+    mainWindow.once('ready-to-show', () => {
+
+    });
     if (!isDev) {
         mainWindow.webContents.on("devtools-opened", () => {
             mainWindow.webContents.closeDevTools();
         });
     }
 
-    mainWindow.once('ready-to-show', () => {
-        autoUpdater.checkForUpdatesAndNotify()
-    })
+
 }
 
 app.on('ready', () => {
     createWindow()
     localStorage.clear()
+    autoUpdater.checkForUpdates().then(r => console.log(r)).catch(err => {
+        console.log(err)
+    })
 })
 
 
@@ -106,9 +106,11 @@ ipcMain.on('app_version', (event) => {
 
 
 autoUpdater.on('update-available', () => {
+    console.log("An update is available")
     mainWindow.webContents.send('update_available');
 });
 autoUpdater.on('update-downloaded', () => {
+    console.log("An update is downloaded")
     mainWindow.webContents.send('update_downloaded');
 });
 

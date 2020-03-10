@@ -1,8 +1,8 @@
-version: 0.0.1
+version: 0.0.2
 files:
-  - url: TijaraShop-Caisse-Setup-0.0.1.exe
-    sha512: yJl5JKDhQRtP3yF02NSUM9dJTNtK5A8KBj2CEpgAWsG8yrNGdn9DS76AMaumuW1ldFq9Cr28uNLP94QanO1xuQ==
-    size: 56767566
-path: TijaraShop-Caisse-Setup-0.0.1.exe
-sha512: yJl5JKDhQRtP3yF02NSUM9dJTNtK5A8KBj2CEpgAWsG8yrNGdn9DS76AMaumuW1ldFq9Cr28uNLP94QanO1xuQ==
-releaseDate: '2020-03-10T12:48:07.139Z'
+  - url: TijaraShop-Caisse-Setup-0.0.2.exe
+    sha512: 1K/9BO1FlOaSJzdOanUf3++X4jcsFFXHrFoMjFk6wJIcXu9alqcrv3rk97vdHQksH2/1jQJWuC52t712VLjK2g==
+    size: 56767929
+path: TijaraShop-Caisse-Setup-0.0.2.exe
+sha512: 1K/9BO1FlOaSJzdOanUf3++X4jcsFFXHrFoMjFk6wJIcXu9alqcrv3rk97vdHQksH2/1jQJWuC52t712VLjK2g==
+releaseDate: '2020-03-10T12:58:41.217Z'
