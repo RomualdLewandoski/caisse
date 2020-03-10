@@ -9,7 +9,7 @@ const ejse = require('ejs-electron')
 const path = require('path')
 const url = require('url')
 const isDev = require('./src/scripts/isDev')
-const { autoUpdater } = require('electron-updater')
+const {autoUpdater} = require('electron-updater')
 
 
 if (isDev) {
@@ -17,6 +17,7 @@ if (isDev) {
 } else {
     console.log("You are not in dev mod")
 }
+
 
 
 // Reload index.html everytime the source files change
@@ -81,9 +82,12 @@ function createWindow() {
 app.on('ready', () => {
     createWindow()
     localStorage.clear()
-    autoUpdater.checkForUpdates().then(r => console.log(r)).catch(err => {
-        console.log(err)
-    })
+    //if (!isDev) {
+        autoUpdater.checkForUpdates().then(r => console.log(r)).catch(err => {
+            console.log(err)
+        })
+   // }
+
 })
 
 

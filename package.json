@@ -1,11 +1,11 @@
 {
   "name": "TijaraShop-Caisse",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "TijaraShop's caisse",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "cross-env ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true node build.js",
+    "dist": "cross-env ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true node build.js --publish always",
     "dist:win": "npm run dist -- WINDOWS",
     "dist:mac": "npm run dist -- MAC",
     "dist:linux": "npm run dist -- LINUX",

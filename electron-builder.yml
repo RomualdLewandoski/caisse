@@ -1,4 +1,31 @@
-appId: com.github.romualdlewandoski.caisse
+productName: "TijaraShop-Caisse"
+appId: "fr.hazielkaos.tijarashop"
+
+# Package electron code into a asar archive. Set to false to debug issues.
+asar: true
+
+files:
+    - "build/"
+    - "package.json"
+    - "dev-app-update.yml"
+    - "!node_modules/jschardet/"
+
+# Windows configuration
+win:
+    icon: "src/app/assets/images/icon.ico"
+    target:
+        - "zip"
+        - "nsis"
+
+# Config for the windows installer
+nsis:
+    oneClick: true
+    perMachine: true
+
+directories:
+    buildResources: "build"
+    output: "dist"
+
 publish:
     provider: github
-    token: 25dafb59c708c25514db4f0ce4f66733e9e6d2a0
+    token: ff0a3dc10c2a5065928d1f47bab2e9e45768625a
