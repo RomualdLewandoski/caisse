@@ -1,7 +1,7 @@
 const $ = require('jquery')
 const jQuery = require('jquery')
 const jQueryUi = require('jquery-ui-dist/jquery-ui')
-const {ipcRenderer, remote, shell, webFrame} = require('electron')
+const {ipcRenderer, remote, shell, webFrame, app} = require('electron')
 const LoggerUtil = require('./assets/js/loggerutil')
 const loggerUICore = LoggerUtil('%c[UICore]', 'color: #000668; font-weight: bold')
 const loggerAutoUpdater = LoggerUtil('%c[AutoUpdater]', 'color: #000668; font-weight: bold')
@@ -48,6 +48,7 @@ document.addEventListener('readystatechange', function () {
             val.addEventListener('click', e => {
                 const window = remote.getCurrentWindow()
                 window.close()
+                app.quit();
             })
         })
 

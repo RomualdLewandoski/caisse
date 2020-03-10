@@ -1,6 +1,6 @@
 {
   "name": "TijaraShop-Caisse",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "TijaraShop's caisse",
   "main": "main.js",
   "scripts": {
