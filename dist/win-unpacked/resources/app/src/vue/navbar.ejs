@@ -1,0 +1,112 @@
+<div id="frameBar">
+    <div id="frameMain">
+        <div class="frameResizableVert frameDragPadder"></div>
+        <% if (process.platform === 'darwin') { %>
+        <div id="frameContentDarwin">
+            <div id="frameButtonDockDarwin">
+                <button class="frameButtonDarwin fCb" id="frameButtonDarwin_close" tabIndex="-1"></button>
+                <button class="frameButtonDarwin fMb" id="frameButtonDarwin_minimize" tabIndex="-1"></button>
+                <button class="frameButtonDarwin fRb" id="frameButtonDarwin_restoredown" tabIndex="-1"></button>
+            </div>
+        </div>
+        <% } else{ %>
+        <div id="frameContentWin">
+            <div id="frameTitleDock">
+            </div>
+            <div id="version"></div>
+            <div id="frameButtonDockWin" style="display: flex; ">
+
+                <div class="navbar-custom-menu" id="loggedNav" style="display: none">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown d-none d-lg-block">
+                            <input class="custom-control" type="text">
+                        </li>
+
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="assets/images/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <span class="d-none d-sm-block" id="loggedName"></span>
+                            </a>
+                            <ul class="dropdown-menu text-black">
+                                <!-- User Image Starts -->
+                                <li class="user-header text-black">
+                                    <img src="assets/images/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    <p id="loggedSubBox">
+                                    </p>
+                                </li>
+                                <!-- User Image Ends -->
+                                <!-- Menu Body Starts -->
+                                <li class="user-body">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <a href="#">Déconnexion</a>
+                                        </div>
+
+                                    </div>
+                                </li>
+                                <!-- Menu Body Ends -->
+                                <!-- Menu Footer Starts -->
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div id="date"></div>
+                <div class="mr-1"></div>
+                <button class="frameButton fMb" id="frameButton_minimize " tabIndex="-1">
+                    <svg name="TitleBarMinimize" width="10" height="10" viewBox="0 0 12 12">
+                        <rect stroke="#ffffff" fill="#ffffff" width="10" height="1" x="1" y="6"></rect>
+                    </svg>
+                </button>
+                <button class="frameButton fRb" id="frameButton_restoredown" tabIndex="-1">
+                    <svg name="TitleBarMaximize" width="10" height="10" viewBox="0 0 12 12">
+                        <rect width="9" height="9" x="1.5" y="1.5" fill="none" stroke="#ffffff"
+                              stroke-width="1.4px"></rect>
+                    </svg>
+                </button>
+                <button class="frameButton fCb" id="frameButton_close" tabIndex="-1">
+                    <svg name="TitleBarClose" width="10" height="10" viewBox="0 0 12 12">
+                        <polygon stroke="#ffffff" fill="#ffffff" fill-rule="evenodd"
+                                 points="11 1.576 6.583 6 11 10.424 10.424 11 6 6.583 1.576 11 1 10.424 5.417 6 1 1.576 1.576 1 6 5.417 10.424 1"></polygon>
+                    </svg>
+                </button>
+
+            </div>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        displayDate()
+        setInterval("displayDate()", 1000)
+    })
+
+    function displayDate() {
+        let html = $('#date')
+        let date = new Date;
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let months = new Array('Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre');
+        let d = date.getDate();
+        let day = date.getDay();
+        let days = new Array('Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi');
+        let h = date.getHours();
+        if (h < 10) {
+            h = "0" + h;
+        }
+        let m = date.getMinutes();
+        if (m < 10) {
+            m = "0" + m;
+        }
+        let s = date.getSeconds();
+        if (s < 10) {
+            s = "0" + s;
+        }
+        let result = '' + days[day] + ' ' + d  + ' ' + months[month] + ' ' + year + ' ' + h + ':' + m + ':' + s;
+        html.html(result)
+
+    }
+
+</script>
