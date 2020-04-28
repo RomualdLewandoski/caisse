@@ -27,12 +27,13 @@
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css"
           media="all">
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+
     <link type="text/css" rel="stylesheet" href="./assets/css/launcher.css">
     <link rel="stylesheet" href="./assets/css/custom.css">
     <link rel="stylesheet" href="./assets/css/sweetalert.css">
-    <script src="./assets/js/ui.js"></script>
-    <script src="./assets/js/vue.js"></script>
 
+    <script src="./TijaraShop.js"></script>
+    <script src="./assets/js/vue.js"></script>
 </head>
 
 <body class="sidebar-mini fixed skin-blue">
@@ -40,7 +41,7 @@
 <div class="loading-page">
     <div class="counter">
         <p>Mise a jour de la caisse</p><br>
-        <p>Veuillez patienter</p><br>
+        <p>Veuillez patienter <span id="loadingAction"></span></p><br>
         <h1>0%
 
         </h1>
@@ -67,6 +68,18 @@
             Restart
         </button>
     </div>
+
+
+    <div id="myOverlay" class="overlay">
+        <span class="closebtn" onclick="closeSearch()" title="Close Overlay">×</span>
+        <div class="overlay-content">
+            <form id="customConsoleForm">
+                <input type="text" placeholder="Action" name="search" id="customConsoleCmd">
+
+            </form>
+        </div>
+    </div>
+
     <script>
         const notification = document.getElementById('notification');
         const message = document.getElementById('message');
@@ -84,24 +97,58 @@
             restartButton.classList.remove('hidden');
             notification.classList.remove('hidden');
         });
-
+        var app_version;
         ipcRenderer.send('app_version')
         ipcRenderer.on('app_version', (event, arg) => {
             ipcRenderer.removeAllListeners('app_version')
             console.log(arg.version)
-            version = arg.version
-            $("#version").text("Version " + version)
+            app_version = arg.version
+            version = arg.version + (isDev ? "<font color='red'> (dev_mode)</font>" : "")
+            $("#version").html("Version " + version)
         })
 
         function closeNotification() {
             notification.classList.add('hidden');
         }
+
         function restartApp() {
             ipcRenderer.send('restart_app');
         }
+
+        var search = false;
+        $(window).keydown(function (event) {
+            if (event.which == 113) { //F2
+                if (search) {
+                    closeSearch()
+                } else {
+                    openSearch();
+                }
+                return false;
+            } else if (event.which == 114) { //F3
+
+                return false;
+            }else if (event.which == 27){
+                if (search){
+                    closeSearch()
+                }
+            }
+        });
+
+        function openSearch() {
+            search = true;
+            document.getElementById("myOverlay").style.display = "block";
+            $('#customConsoleCmd').focus();
+        }
+
+        function closeSearch() {
+            if (search) {
+                search = false;
+                document.getElementById("myOverlay").style.display = "none";
+            }
+        }
     </script>
 </div>
-
+<script src="./scripts/Front/ConsoleCmd.js"></script>
 <script src="assets/js/jquery/slim.min.js"></script>
 <script src="assets/js/jquery/jquery.min.js"></script>
 <script src="assets/js/jqueryui/jquery-ui.min.js"></script>
@@ -117,6 +164,11 @@
 <!-- Theme JS -->
 <script src="assets/js/nanoscroller/nanoscroller.js"></script>
 <script src="assets/js/custom/theme.js"></script>
+
+<!--<script src="./assets/js/ui.js"></script>-->
+
+
+
 </body>
 
 </html>

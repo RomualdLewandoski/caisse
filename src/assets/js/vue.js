@@ -7,6 +7,14 @@ const VIEWS = {
     admin: {
         div: '#adminContainer',
         page: adminPage
+    },
+    install: {
+        div: '#installContainer',
+        page: installPage
+    },
+    firstLogin: {
+        div: "#firstLoginContainer",
+        page: firstLoginPage
     }
 }
 
@@ -39,7 +47,6 @@ function switchView(current, next, currentFadeTime = 1, nextFadeTime = 1, onCurr
     currentView = next
     let vue = JSON.stringify(next)
     localStorage.setItem('vue', vue)
-    console.log(next.page)
     $(`${current.div}`).fadeOut(currentFadeTime, () => {
         onCurrentFade()
         $(`${next.div}`).fadeIn(nextFadeTime, () => {
@@ -128,13 +135,13 @@ function makeBoxe(elem, elemresize) {
     });
     $(window).resize(function () {
         let poss = $(elem).position();
-        if (poss.left + $(elem).width() > $('.pageContainer').width()){
+        if (poss.left + $(elem).width() > $('.pageContainer').width()) {
             let left = $('.pageContainer').width() - $(elem).width() - 10
-            $(elem).css('left', left+'px')
+            $(elem).css('left', left + 'px')
         }
-        if (poss.top + $(elem).height() > $('.pageContainer').height()){
+        if (poss.top + $(elem).height() > $('.pageContainer').height()) {
             let top = $('.pageContainer').height() - $(elem).height() - 60
-            $(elem).css('top', top+'px')
+            $(elem).css('top', top + 'px')
         }
         let pageWidth = $('.pageContainer').width();
         let pageHeight = $('.pageContainer').height();

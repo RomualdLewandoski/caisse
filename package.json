@@ -1,15 +1,17 @@
 {
   "name": "TijaraShop-Caisse",
-  "version": "0.0.6",
+  "version": "0.0.5",
   "description": "TijaraShop's caisse",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "postinstall": "electron-builder install-app-deps",
     "dist": "cross-env ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true node build.js --publish always",
     "dist:win": "npm run dist -- WINDOWS",
     "dist:mac": "npm run dist -- MAC",
     "dist:linux": "npm run dist -- LINUX",
-    "deploy": "electron-builder build --win --publish always"
+    "deploy": "electron-builder build --win --publish always",
+    "rebuild": "electron-rebuild -f -w sqlite3"
   },
   "repository": {
     "type": "git",
@@ -21,10 +23,12 @@
     "cross-env": "^6.0.3",
     "electron": "^8.0.2",
     "electron-builder": "^20.19.2",
+    "electron-rebuild": "^1.10.1",
     "livereload": "^0.9.1"
   },
   "dependencies": {
     "@hyperapp/html": "^0.5.1",
+    "bcrypt": "^4.0.1",
     "chosen-js": "^1.8.7",
     "connect": "^3.7.0",
     "ejs": "^3.0.1",
@@ -37,6 +41,9 @@
     "jquery": "^3.4.1",
     "jquery-resizable-dom": "^0.35.0",
     "jquery-ui-dist": "^1.12.1",
-    "serve-static": "^1.14.1"
+    "knex": "^0.19.0",
+    "serve-static": "^1.14.1",
+    "sqlite3": "^4.1.1",
+    "woocommerce-api": "^1.5.0"
   }
 }

@@ -1,11 +1,42 @@
 <div class="e-card" id="fournisseursList">
     <div class="card-header">
-        Fournisseurs List
+        <h2>Fichiers / Fournisseurs</h2>
+
+        <div class="action">
+            <h3>
+                <i class="fas fa-sync rounded clickable" id="refreshFournisseur"></i>
+                <i class="fas fa-file-medical rounded clickable" id="addFournisseur"></i>
+                <i class="fas fa-trash rounded disabled clickable" id="deleteFournisseur"></i>
+                <i class="fas fa-times rounded clickable" id="closeFournisseur"></i>
+            </h3>
+        </div>
+    </div>
+    <div class="card-title">
+        <form>
+            <div class="row">
+                <div class="col-md-3">Prénom</div>
+                <div class="col-md-3">Nom</div>
+                <div class="col-md-3">Email</div>
+                <div class="col-md-3">Téléphone</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" placeholder="Prénom" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" placeholder="Nom" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <input type="email" placeholder="Email" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <input type="tel" placeholder="Téléphone" class="form-control">
+                </div>
+            </div>
+        </form>
     </div>
     <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        TODO HERE : Table with DataTable ?
     </div>
     <div class="card-footer">
         <div class="win-size-grip" id="resize-fournisseursList"></div>
@@ -13,7 +44,6 @@
 
 
     <script>
-
-  makeBoxe('#fournisseursList', "#resize-fournisseursList")
+        makeBoxe('#fournisseursList', "#resize-fournisseursList")
     </script>
 </div>
