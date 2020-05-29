@@ -1,4 +1,4 @@
-module.exports.log = function (action, err) {
+module.exports.log = function (action, __OBFID = "null", err) {
     //todo here we ll generate our error and append it to file
     // todo then we ll generate an alert to say an internal error was encountered it has been logged on file
     var file = errorFolder + "/" + errFile;
@@ -12,7 +12,7 @@ module.exports.log = function (action, err) {
         + " - " + (d.getHours() < 10 ? "0" + d.getHours() : d.getHours())
         + ":" + (d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes())
         + ":" + (d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds())
-        + "] \n+++" + action + " : \n+++" + err + "\n"
+        + "] \n+++ " + __OBFID + " \n+++ " + action + " : \n+++ " + err + "\n"
     fs.closeSync(fs.openSync(file, 'a'));
 
     try {

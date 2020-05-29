@@ -19,7 +19,7 @@ const VIEWS = {
 }
 
 // The currently shown view container.
-let currentView;
+let currentView = VIEWS.login;
 if (localStorage.getItem('vue')) {
     currentView = localStorage.getItem('vue')
 } else {
@@ -47,13 +47,20 @@ function switchView(current, next, currentFadeTime = 1, nextFadeTime = 1, onCurr
     currentView = next
     let vue = JSON.stringify(next)
     localStorage.setItem('vue', vue)
-    $(`${current.div}`).fadeOut(currentFadeTime, () => {
-        onCurrentFade()
+    if (current != null) {
+        $(`${current.div}`).fadeOut(currentFadeTime, () => {
+            onCurrentFade()
+            $(`${next.div}`).fadeIn(nextFadeTime, () => {
+                onNextFade()
+                $(`${current.div}`).remove()
+            })
+        })
+    } else {
         $(`${next.div}`).fadeIn(nextFadeTime, () => {
             onNextFade()
-            $(`${current.div}`).remove()
         })
-    })
+    }
+
 }
 
 /**
@@ -104,13 +111,15 @@ function arrayRemove(arr, value) {
     });
 }
 
-var result = arrayRemove(array, 6);// result = [1, 2, 3, 4, 5, 7, 8, 9, 0]
+function removeBoxList(value) {
+    boxList = arrayRemove(boxList, value)
+}
 
 function makeBoxe(elem, elemresize) {
     $(elem).draggable({
         cursor: "move",
         containment: '.pageContainer',
-        cancel: ".win-size-grip, input"
+        cancel: ".win-size-grip, input, select, i, textarea, button"
     });
     $(elem).resizableSafe({
         handleSelector: elemresize,
@@ -154,8 +163,10 @@ function makeBoxe(elem, elemresize) {
             $(elem).height(pageHeight - 60)
         }
     })
-    $(elem).click(function () {
-        toggleBox($(this).attr('id'))
+    $(elem).click(function (e) {
+        if (e.target.nodeName != "I" && e.target.nodeName != "BUTTON") {
+            toggleBox($(this).attr('id'))
+        }
     })
     $(elem).on("drag", function () {
         toggleBox($(this).attr('id'))

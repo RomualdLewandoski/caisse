@@ -70,9 +70,27 @@ function apiPerms(counter, c) {
     })
 }
 
-async function apiUsers(counter, c) {
+function apiUsers(counter, c) {
     apiHelper.getUsers().then((result) => {
         let toReach = 20;
+        var i = setInterval(function () {
+
+            counter++;
+            c++;
+            $(".loading-page .counter h1").html(c + "%");
+            $(".loading-page .counter hr").css("width", c + "%");
+            if (counter == toReach) {
+                $('#loadingAction').text("Récupération des fournisseurs");
+                clearInterval(i);
+                apiSuppliers(counter, c)
+            }
+        }, 50)
+    })
+}
+
+function apiSuppliers(counter, c) {
+    apiHelper.getSuppliers().then((result) => {
+        let toReach = 30;
         var i = setInterval(function () {
 
             counter++;
@@ -102,33 +120,28 @@ function displayLogin(counter, c) {
             updater.createTables();
             updater.updateLoop();
             await makeLogin().then((r) => {
-                console.log(r)
                 if (r) {
-                    console.log(user)
                     $('.loading-page').fadeOut(500)
                     $('.app-content').fadeIn(500)
                     main = $("#main")
                     $('#loggedName').html(user.usernameShopLogin)
                     $('#loggedNav').show()
-                    if (user.hasAdmin) {
-                        $('#adminNav').show()
-                        ejs.renderFile(adminPage, {}, {}, (err, str) => {
-                            if (err) {
-                                console.log(err)
-                                errorHelper.log("Generating admin page login oK", err)
-                            } else {
-                                $("#main").append(str)
-                            }
-                        })
-                        switchView(currentView, VIEWS.admin, 500, 500)
-                    } else {
-                        $('#adminNav').hide()
-                    }
+                    leftBar.generateMenu()
+                    $('#adminNav').show()
+                    ejs.renderFile(adminPage, {}, {}, (err, str) => {
+                        if (err) {
+                            let __OBFID = "4dd6a707-7e86-411e-93d4-90530d794902"
+                            errorHelper.log("Generating admin page when login oK", __OBFID, err)
+                        } else {
+                            $("#main").append(str)
+                            switchView(null, VIEWS.admin, 500, 500)
+                        }
+                    })
                 } else {
                     $('.loading-page').fadeOut(500)
                     $('.app-content').fadeIn(500)
                     main = $("#main")
-                    if (localStorage.getItem('vue')) {
+                    /*if (localStorage.getItem('vue')) {
                         var page = localStorage.getItem('vue')
                         var obj = JSON.parse(page)
                         ejs.renderFile(obj.page, {}, {}, (err, str) => {
@@ -139,7 +152,7 @@ function displayLogin(counter, c) {
                                 $(obj.div).show()
                             }
                         })
-                    } else {
+                    } else {*/
                         ejs.renderFile(loginPage, {}, {}, (err, str) => {
                             if (err) {
                                 console.log(err)
@@ -147,7 +160,7 @@ function displayLogin(counter, c) {
                                 $("#main").append(str)
                             }
                         })
-                    }
+                    //}
                 }
             })
         }
@@ -161,7 +174,6 @@ async function makeLogin() {
     var req = userHelper.getSession();
     let isLogged = false
     await req.then((r) => {
-        console.log(r)
         if (r != false) {
             user = r
             isLogged = true
@@ -169,7 +181,8 @@ async function makeLogin() {
             isLogged = false
         }
     }).catch((err) => {
-        errorHelper.log("Err makeLogin ", err)
+        let __OBFID = "947152c1-00d7-4888-91e9-18ac3aa4b55c"
+        errorHelper.log("Err makeLogin ", __OBFID, err)
         isLogged = false
     })
     return isLogged

@@ -1,11 +1,3 @@
-function isAdmin() {
-    if (localStorage.getItem('perms') == 999) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 /**
  * BOXES LIST
  */
@@ -17,31 +9,39 @@ const fournisseursListBox = {
     file: path.join(__dirname, "vue", "fournisseursList.ejs"),
     div: "#fournisseursList"
 }
+const supplierAdd = {
+    file: path.join(__dirname, "vue", "supplierAdd.ejs"),
+    div: "#supplierAdd"
+}
+
+const supplierEdit = {
+    file: path.join(__dirname, "vue", "supplierEdit.ejs"),
+    div: "#supplierEdit"
+}
+
+const supplierView = {
+    file: path.join(__dirname, "vue", "supplierView.ejs"),
+    div: "#supplierView"
+}
 
 
-//TODO HERE WE LL DEFINE ALL OF THE NAV ACTION
-$('#navArticlesList').click(function () {
-    showBox(articlesListBox)
-});
-$('#navFournisseursList').click(function () {
-    showBox(fournisseursListBox)
-});
-
-function showBox(box) {
-    if (isAdmin()) {
+function showBox(box, perms, id = 0) {
+    if (perms) {
         if (!boxList.includes(box.div)) {
             ejs.renderFile(box.file, {}, {}, (err, str) => {
                 if (err) {
                     console.log(err)
                 } else {
+                    str = str.replace(/%id%/g, id)
                     $("#adminContainer").append(str)
+
                     toggleBox(box.div)
                 }
             })
-        }else{
+        } else {
             toggleBox(box.div)
         }
     } else {
-        swal("Oups", "Vous devez être administrateur pour accéder a cette fonction", "error")
+        swal("Oups", "Vous ne possédez pas la permission pour accéder a cette fonction", "error")
     }
 }

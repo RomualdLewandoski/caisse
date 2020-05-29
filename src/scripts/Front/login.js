@@ -14,33 +14,33 @@ function doLogin(userName, pass) {
             }
         }
     }).catch((err) => {
-        errorHelper.log("doLogin ", err)
+        let __OBFID = "07f46a5a-e8bf-4cda-a439-69382bc2cf3a"
+        errorHelper.log("doLogin ", __OBFID, err)
     })
 }
 
 function loginSuccess() {
     $('#loggedName').html(user.usernameShopLogin)
     $('#loggedNav').show()
-    if (user.hasAdmin) {
-        $('#adminNav').show()
-        ejs.renderFile(adminPage, {}, {}, (err, str) => {
-            if (err) {
-                console.log(err)
-                errorHelper.log("Generating admin page login oK", err)
-            } else {
-                $("#main").append(str)
-            }
-        })
-        switchView(currentView, VIEWS.admin, 500, 500)
-    } else {
-        $('#adminNav').hide()
-    }
+    $('#adminNav').show()
+    leftBar.generateMenu()
+    ejs.renderFile(adminPage, {}, {}, (err, str) => {
+        if (err) {
+            let __OBFID = "fa038f66-4383-4179-87ef-076f4746467a"
+            errorHelper.log("Generating admin page login oK",__OBFID, err)
+        } else {
+            $("#main").append(str)
+        }
+    })
+    switchView(currentView, VIEWS.admin, 500, 500)
+
 }
 
 function firstLogin() {
     ejs.renderFile(firstLoginPage, {}, {}, (err, str) => {
         if (err) {
-            errorHelper.log("Generating firstLoginPage", err)
+            let __OBFID = "b47fde9f-bca1-43ab-9897-8c30709417a3"
+            errorHelper.log("Generating firstLoginPage", __OBFID, err)
         } else {
             $("#main").append(str)
             switchView(currentView, VIEWS.firstLogin, 500, 500)

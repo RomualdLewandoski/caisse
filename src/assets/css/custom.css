@@ -109,7 +109,7 @@
 }
 
 .win-size-grip {
-    position: absolute;
+    float: right;
     width: 16px;
     height: 16px;
     padding: 4px;
@@ -126,8 +126,10 @@
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
-    min-width: 0;
+    min-width: 40%;
     width: 75%;
+    height: 75%;
+    min-height: 50%;
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
@@ -142,6 +144,8 @@
 .card-footer {
     background-color: #003953;
     color: darkgray;
+    padding-right: 4px;
+    padding-bottom: 4px;
 }
 
 .card-header {
@@ -155,7 +159,7 @@
 .card-header .rounded {
     border-radius: 50% !important;
     padding: 0.5em 0.6em;
-    background-color: gray;
+    background-color: #a9a9a9;
     color: #525052;
 }
 
@@ -280,10 +284,67 @@
     color: #ffffff;
 }
 
-.clickable{
+.clickable {
     cursor: pointer;
 }
 
-.disabled{
+.disabled {
     cursor: not-allowed !important;
+}
+
+.table-fixed {
+    width: 100%;
+    background-color: #f3f3f3;
+}
+
+.table-fixed tbody {
+    height: 200px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-fixed thead, .table-fixed tbody, .table-fixed th {
+    display: block;
+}
+
+.table-fixed tbody td {
+    float: left;
+}
+
+.table-fixed thead tr th {
+    float: left;
+    background-color: #f39c12;
+    border-color: #e67e22;
+}
+
+.h2, h2 {
+    font-size: 1.75rem;
+    font-family: sans-serif;
+}
+
+.bg-lightblue {
+    background-color: #cce9f5;
+}
+
+.text-blavk {
+    color: black;
+}
+
+.inner-link {
+    color: #0098d4;
+    font-weight: bold;
+}
+
+.card-title-info {
+    font-weight: bold;
+    font-family: sans-serif;
+    color: #9fa5aa;
+}
+
+.aic {
+    -ms-flex-align: center !important;
+    align-items: center !important;
+}
+.custom-select{
+    background: #fff url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2…%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E) no-repeat right 5px top 55%!important;
 }

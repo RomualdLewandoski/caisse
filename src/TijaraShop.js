@@ -45,6 +45,7 @@ const knex = require("knex")({
     }
 });
 
+
 var isDev = localStorage.getItem('dev') == "true";
 
 /**
@@ -56,7 +57,7 @@ const loggerAutoUpdater = LoggerUtil('%c[AutoUpdater]', 'color: #000668; font-we
 const loggerAutoUpdaterSuccess = LoggerUtil('%c[AutoUpdater]', 'color: #209b07; font-weight: bold')
 const loggerLogin = LoggerUtil('%c[Login]', 'color: #000668; font-weight: bold')
 const loggerInstall = LoggerUtil('%c[Install]', 'color: #000668; font-weight: bold')
-const loggerUpdateThread = LoggerUtil('%c[UpdateThrea]', 'color: #000668; font-weight: bold')
+const loggerUpdateThread = LoggerUtil('%c[UpdateThread]', 'color: #000668; font-weight: bold')
 
 /**
  * PAGES
@@ -65,6 +66,7 @@ const loginPage = path.join(__dirname, "vue", 'login.ejs')
 const adminPage = path.join(__dirname, "vue", "admin.ejs")
 const installPage = path.join(__dirname, "vue", "install.ejs")
 const firstLoginPage = path.join(__dirname, "vue", "firstLogin.ejs")
+
 
 /**
  * FRONT SCRIPTS
@@ -76,6 +78,8 @@ const ui = require('./scripts/Front/ui');
  */
 const setup = require('./scripts/Back/setup')
 const updater = require('./scripts/Back/UpdateThread')
+const leftBar = require('./scripts/Back/leftBar')
+
 
 /**
  * METHODS
