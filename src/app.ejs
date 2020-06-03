@@ -3,12 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard | Perfect Admin - Responsive HTML5 Admin Template</title>
-    <meta name="keywords" content="HTML5 Admin Template"/>
-    <meta name="description" content="Perfect Admin - Responsive HTML5 Admin Template">
-    <meta name="author" content="perfectusinc.com">
+    <title>TijaraShop | Caisse/Gestion</title>
+    <meta name="keywords" content=""/>
+    <meta name="description" content="">
+    <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <!-- Google Web Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <!-- Bootstrap CSS CDN -->
@@ -19,15 +20,20 @@
     <link rel="stylesheet" href="assets/css/sidebar/side-nav.css">
     <link rel="stylesheet" href="assets/css/fonts/fonts-style.css">
     <link rel="stylesheet" href="assets/css/nanoscroller/nanoscroller.css">
+    <link rel="stylesheet" href="assets/css/chosen.css">
     <!-- Page CSS -->
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css"
           media="all">
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css"
           media="all">
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+
     <link type="text/css" rel="stylesheet" href="./assets/css/launcher.css">
     <link rel="stylesheet" href="./assets/css/custom.css">
-    <script src="./assets/js/ui.js"></script>
+    <link rel="stylesheet" href="./assets/css/sweetalert.css">
+    <link rel="stylesheet" href="./assets/css/datatables.css">
+
+    <script src="./TijaraShop.js"></script>
     <script src="./assets/js/vue.js"></script>
 </head>
 
@@ -36,7 +42,7 @@
 <div class="loading-page">
     <div class="counter">
         <p>Mise a jour de la caisse</p><br>
-        <p>Veuillez patienter</p><br>
+        <p>Veuillez patienter <span id="loadingAction"></span></p><br>
         <h1>0%
 
         </h1>
@@ -54,13 +60,99 @@
         </div>
     </div>
     <a href="javascript:" id="return-to-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+    <div id="notification" class="hidden">
+        <p id="message"></p>
+        <button id="close-button" onClick="closeNotification()">
+            Close
+        </button>
+        <button id="restart-button" onClick="restartApp()" class="hidden">
+            Restart
+        </button>
+    </div>
 
+
+    <div id="myOverlay" class="overlay">
+        <span class="closebtn" onclick="closeSearch()" title="Close Overlay">×</span>
+        <div class="overlay-content">
+            <form id="customConsoleForm">
+                <input type="text" placeholder="Action" name="search" id="customConsoleCmd">
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const notification = document.getElementById('notification');
+        const message = document.getElementById('message');
+        const restartButton = document.getElementById('restart-button');
+        ipcRenderer.on('update_available', () => {
+            console.log("Page update available")
+            ipcRenderer.removeAllListeners('update_available');
+            message.innerText = 'A new update is available. Downloading now...';
+            notification.classList.remove('hidden');
+        });
+        ipcRenderer.on('update_downloaded', () => {
+            console.log("Page update downloaded")
+            ipcRenderer.removeAllListeners('update_downloaded');
+            message.innerText = 'Update Downloaded. It will be installed on restart. Restart now?';
+            restartButton.classList.remove('hidden');
+            notification.classList.remove('hidden');
+        });
+        var app_version;
+        ipcRenderer.send('app_version')
+        ipcRenderer.on('app_version', (event, arg) => {
+            ipcRenderer.removeAllListeners('app_version')
+            console.log(arg.version)
+            app_version = arg.version
+            version = arg.version + (isDev ? "<font color='red'> (dev_mode)</font>" : "")
+            $("#version").html("Version " + version)
+        })
+
+        function closeNotification() {
+            notification.classList.add('hidden');
+        }
+
+        function restartApp() {
+            ipcRenderer.send('restart_app');
+        }
+
+        var search = false;
+        $(window).keydown(function (event) {
+            if (event.which == 113) { //F2
+                if (search) {
+                    closeSearch()
+                } else {
+                    openSearch();
+                }
+                return false;
+            } else if (event.which == 114) { //F3
+
+                return false;
+            }else if (event.which == 27){
+                if (search){
+                    closeSearch()
+                }
+            }
+        });
+
+        function openSearch() {
+            search = true;
+            document.getElementById("myOverlay").style.display = "block";
+            $('#customConsoleCmd').focus();
+        }
+
+        function closeSearch() {
+            if (search) {
+                search = false;
+                document.getElementById("myOverlay").style.display = "none";
+            }
+        }
+    </script>
 </div>
-
-<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="./scripts/Front/ConsoleCmd.js"></script>
 <script src="assets/js/jquery/slim.min.js"></script>
 <script src="assets/js/jquery/jquery.min.js"></script>
-
+<script src="assets/js/jqueryui/jquery-ui.min.js"></script>
 <!-- Popper.JS -->
 <script src="assets/js/jquery/popper.min.js"></script>
 <!-- Bootstrap JS -->
@@ -73,7 +165,11 @@
 <!-- Theme JS -->
 <script src="assets/js/nanoscroller/nanoscroller.js"></script>
 <script src="assets/js/custom/theme.js"></script>
-</body>
 
+<!--<script src="./assets/js/ui.js"></script>-->
+
+
+
+</body>
 
 </html>

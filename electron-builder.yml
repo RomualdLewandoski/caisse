@@ -1,0 +1,29 @@
+productName: "TijaraShop-Caisse"
+appId: "fr.hazielkaos.tijarashop"
+
+# Package electron code into a asar archive. Set to false to debug issues.
+asar: false
+
+files:
+    - "!{dist,.gitignore,.vscode,docs,dev-app-update.yml,.travis.yml,.nvmrc,.eslintrc.json,build.js}"
+
+# Windows configuration
+win:
+    icon: "src/app/assets/images/icon.ico"
+    target:
+        - "nsis"
+
+# Config for the windows installer
+nsis:
+    oneClick: false
+    perMachine: false
+    allowElevation: true
+    allowToChangeInstallationDirectory: true
+
+directories:
+    buildResources: "build"
+    output: "dist"
+
+publish:
+    provider: github
+    token: 5c636c2180f4ddf4eaeeebe93db06230faf5ec10

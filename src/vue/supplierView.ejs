@@ -1,0 +1,267 @@
+<div class="e-card" id="supplierView" data-id="%id%">
+    <div class="card-header">
+        <h2>Fichiers / Fournisseurs / <font color="#0290c8">Lecture de fiche</font></h2>
+        <div class="action">
+            <h5>
+                <i class="fas fa-times rounded clickable" id="closeSupplierView"></i>
+            </h5>
+        </div>
+    </div>
+    <div class="card-body" style="min-height: 10%; overflow-y: scroll">
+        <div class="row text-black bg-lightblue px-2 align-items-center">
+            <div class="col-md-1 text-right">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="supplierViewIsSociety" value="option1" disabled>
+                    <label class="form-check-label" for="supplierViewIsSociety">Société</label>
+                </div>
+            </div>
+            <div class="col-md-5 mt-3">
+                <div class="form-group row aic">
+                    <label for="staticEmail" class="col-sm-3 col-form-label">Raison Sociale</label>
+                    <div class="col-md-9">
+                        <strong id="supplierViewSocietyName">test</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <a href="#" class="inner-link" id="supplierViewMore"> <i class="fas fa-eye"></i> Plus d'informations</a>
+            </div>
+        </div>
+        <div id="supplierView1">
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card-title">
+
+                        <div class="row mb-1 aic">
+                            <div class="col-md-2">
+                                <strong id="supplierViewGender"></strong>
+                            </div>
+                            <div class="col-md-5">
+                                <strong id="supplierViewFirstName"></strong>
+                            </div>
+                            <div class="col-md-5">
+                                <strong id="supplierViewLastName"></strong>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                Civilité
+                            </div>
+                            <div class="col-md-5">
+                                Prénom
+                            </div>
+                            <div class="col-md-5">
+                                Nom
+                            </div>
+                        </div>
+                        <div class="row mb-1 aic">
+                            <div class="col-md-2">
+                                Adresse
+                            </div>
+                            <div class="col-md-10">
+                                <strong id="supplierViewAddress"></strong>
+                            </div>
+                        </div>
+                        <div class="row mb-1 aic">
+                            <div class="col-md-2">CP / Ville</div>
+                            <div class="col-md-3">
+                                <strong id="supplierViewZipCode"></strong>
+                            </div>
+                            <div class="col-md-7">
+                                <strong id="supplierViewCity"></strong>
+                            </div>
+                        </div>
+                        <div class="row aic">
+                            <div class="col-md-2">
+                                Pays
+                            </div>
+                            <div class="col-md-10">
+                                <strong id="supplierViewCountry"></strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-title mt-2">
+                        <div class="row mb-1 aic">
+                            <div class="col-md-2">Code Ref.</div>
+                            <div class="col-md-10">
+                                <strong id="supplierViewRefCode"></strong>
+                            </div>
+                        </div>
+                        <div class="row mb-1 aic">
+                            <div class="col-md-2">Site Web</div>
+                            <div class="col-md-10">
+                                <strong id="supplierViewWebSite"></strong>
+                            </div>
+                        </div>
+                        <div class="row mb-1 aic">
+                            <div class="col-md-1 offset-10 text-right mb-1">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="supplierViewIsActive"
+                                           value="option1" disabled>
+                                    <label class="form-check-label" for="supplierViewIsActive">Actif</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-title">
+                        <div class="row mb-1 aic">
+                            <div class="col-md-3">Téléphone</div>
+                            <div class="col-md-9">
+                                <strong id="supplierViewPhone"></strong>
+                            </div>
+                        </div>
+                        <div class="row mb-1 aic">
+                            <div class="col-md-3">Mobile</div>
+                            <div class="col-md-9"><strong id="supplierViewMobilePhone"></strong>
+                            </div>
+                        </div>
+                        <div class="row aic">
+                            <div class="col-md-3">Mail</div>
+                            <div class="col-md-9"><strong id="supplierViewMail"></strong></div>
+                        </div>
+                    </div>
+                    <div class="mt-1 card-title">
+                        Dernière commande le **
+                        <div class="row mt-4 mb-1 aic">
+                            <div class="col-md-5">Commande en cours</div>
+                            <div class="col-md-5"><input type="text" disabled class="form-control"></div>
+                        </div>
+                        <div class="row mb-1 aic">
+                            <div class="col-md-5">
+                                BL à facturer
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-1 aic">
+                            <div class="col-md-5">
+                                Factures à régler
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-1 aic">
+                            <div class="col-md-5">
+                                Avoirs
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-1 aic">
+                            <div class="col-md-5">
+                                <strong>Solde théorique</strong>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="supplierView2" style="display: none">
+            <div class="row mt-3 mb-2">
+                <div class="col-md-6">
+                    <div class="card-title mb-2">
+                        <h5 class="card-title-info mb-2">Règlement</h5>
+                        <div class="col-9 offset-3">
+                            <div class="row aic">
+                                <div class="col-md-5">Mode de règlement</div>
+                                <div class="col-md-7">
+                                    <strong id="supplierViewPaymentType"></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-title mb-2">
+                        <h5 class="card-title-info mb-2">Coordonnées bancaires</h5>
+                        <div class="row mb-2 aic">
+                            <div class="col-md-2">IBAN</div>
+                            <div class="col-md-10"><strong id="supplierViewIban"></strong></div>
+                        </div>
+                        <div class="row aic">
+                            <div class="col-md-2">BIC</div>
+                            <div class="col-md-10"><strong id="supplierViewBic"></strong></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-title">
+                        <h5 class="card-title-info mb-2"> Identification</h5>
+                        <div class="row">
+                            <div class="col-md-7 offset-5">
+                                <div class="row aic mb-2">
+                                    <div class="col-md-4">N° TVA</div>
+                                    <div class="col-md-8"><strong id="supplierViewTva"></strong>
+                                    </div>
+                                </div>
+                                <div class="row aic mb-2">
+                                    <div class="col-md-4">N° SIRET</div>
+                                    <div class="col-md-8"><strong id="supplierViewSiret"></strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-12">
+                    <div class="card-title">
+                        <div class="row text-center mb-2">
+                            <div class="col-md-2 "></div>
+                            <div class="col-md-3 "><h6 class="card-title-info">Nom / Prénom</h6></div>
+                            <div class="col-md-5 "><h6 class="card-title-info">Mail</h6></div>
+                            <div class="col-md-2 "><h6 class="card-title-info">Tel</h6></div>
+                        </div>
+                        <div class="row aic mb-2">
+                            <div class="col-md-2">Direction</div>
+                            <div class="col-md-3"><strong
+                                        id="supplierViewDirectionName"></strong>
+                            </div>
+                            <div class="col-md-5"><strong
+                                        id="supplierViewDirectionMail"></strong></div>
+                            <div class="col-md-2"><strong
+                                        id="supplierViewDirectionPhone"></strong></div>
+                        </div>
+                        <div class="row aic mb-2">
+                            <div class="col-md-2">Comptabilité</div>
+                            <div class="col-md-3"><strong  id="supplierViewComptaName"></strong>
+                            </div>
+                            <div class="col-md-5"><strong  id="supplierViewComptaMail"></strong>
+                            </div>
+                            <div class="col-md-2"><strong  id="supplierViewComptaPhone"></strong>
+                            </div>
+                        </div>
+                        <div class="row aic mb-4">
+                            <div class="col-md-2">Commercial</div>
+                            <div class="col-md-3"><strong  id="supplierViewComName"></strong>
+                            </div>
+                            <div class="col-md-5"><strong  id="supplierViewComMail"></strong>
+                            </div>
+                            <div class="col-md-2"><strong  id="supplierViewComPhone"></strong>
+                            </div>
+                        </div>
+                        <textarea placeholder="Note" class="form-control" id="supplierViewNotes" disabled></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="win-size-grip" id="resize-supplierView"></div>
+    </div>
+    <script src="./scripts/Front/supplier/supplierView.js"></script>
+
+    <script>
+        makeBoxe('#supplierView', "#resize-supplierView")
+        loadViewData()
+    </script>
+
+</div>

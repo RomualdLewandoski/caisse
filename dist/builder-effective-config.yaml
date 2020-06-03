@@ -1,0 +1,22 @@
+directories:
+  output: dist
+  buildResources: build
+productName: TijaraShop-Caisse
+appId: fr.hazielkaos.tijarashop
+asar: false
+files:
+  - filter:
+      - '!{dist,.gitignore,.vscode,docs,dev-app-update.yml,.travis.yml,.nvmrc,.eslintrc.json,build.js}'
+win:
+  icon: src/app/assets/images/icon.ico
+  target:
+    - nsis
+nsis:
+  oneClick: false
+  perMachine: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+publish:
+  provider: github
+  token: <stripped sensitive data>
+electronVersion: 8.0.3

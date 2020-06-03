@@ -1,0 +1,41 @@
+<div class="e-card" id="logList">
+    <div class="card-header">
+        <h2>Admin / Logs</h2>
+
+        <div class="action">
+            <h5>
+                <i class="fas fa-sync rounded clickable" id="refreshLogList"></i>
+                <i class="fas fa-times rounded clickable" id="closeLogList"></i>
+            </h5>
+        </div>
+    </div>
+    <script src="./assets/js/datatables.js"></script>
+    <div class="card-body" style="min-height: 10%; max-height: 90%; overflow-y: scroll">
+        <table class="table table-bordered " id="logListTable">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Utilisateur</th>
+                <th scope="col">Type</th>
+                <th scope="col">Action</th>
+                <th scope="col">Date</th>
+                <th scope="col">Gestion</th>
+            </tr>
+            </thead>
+            <tbody id="tbodyLogList">
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+    <div class="card-footer">
+        <div class="win-size-grip" id="resize-logList"></div>
+    </div>
+    <script src="./scripts/Front/admin/logList.js"></script>
+    <script>
+        makeBoxe('#logList', "#resize-logList")
+    </script>
+
+</div>

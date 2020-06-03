@@ -5,7 +5,7 @@
  
 .skin-blue .sidebar-menu li > a:hover, .skin-blue .sidebar-menu > li.active > a, .skin-blue .btn-outline-primary:hover,.skin-blue .jsgrid-control-field > button:hover {background: rgba(32,124,229,1);background: -moz-linear-gradient(left, #237EE5 0%, #1268CB 99%);background: -webkit-linear-gradient(left, #237EE5 0%, #1268CB 99%);background: -o-linear-gradient(left, #237EE5 0%, #1268CB 99%);background:-ms-linear-gradient(left, #237EE5 0%, #1268CB 99%);background: linear-gradient(to right, #237EE5 0%, #1268CB 99%);filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#237EE5', endColorstr='#1268CB', GradientType=1 );}
 .skin-blue thead .fc-day-header,.skin-blue .main-header .navbar .sidebar-toggle:hover,.skin-blue .btn-custom-price:hover,.skin-blue .dd-item > button, .skin-blue .main-header .logo, .skin-blue .pricing-table2 .table-col.table-col-regular .btn-custom-price:hover,.skin-blue .dd-handle:hover,.skin-blue .page-item.active .page-link,.skin-blue .page-link:hover,.skin-blue .dataTables_wrapper thead > tr > th,.skin-blue .jsgrid-pager-page.jsgrid-pager-current-page,.skin-blue .jsgrid-pager-page:hover, .skin-blue .jsgrid-pager-nav-button:hover,.skin-blue #detailsDialog #save:after,.skin-blue .jsgrid-control-field > button,.skin-blue .ui-widget-header 
-{background:#1268CB;}
+{/*background:#1268CB;*/}
 .skin-blue .fc-day-number{color:#1268CB;}
 .skin-blue .fc-unthemed td,.skin-blue .dropzone,.skin-blue .page-item.active .page-link,.skin-blue .page-link:hover,.skin-blue .jsgrid-pager-page.jsgrid-pager-current-page,.skin-blue .jsgrid-pager-page:hover, .skin-blue .jsgrid-pager-nav-button:hover  
 {border-color:#1268CB;}
