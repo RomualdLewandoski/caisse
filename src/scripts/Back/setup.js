@@ -22,7 +22,6 @@ function getConfig() {
 
 function displayInstall() {
     loggerUICore.log('UICore Installer...')
-    //todo here we ll display our instll box for copying script
     $('.loading-page').fadeOut(500)
     $('.app-content').fadeIn(500)
     main = $("#main")
@@ -37,7 +36,6 @@ function displayInstall() {
 
 function loadFromApi() {
     loggerUICore.log('UICore Api getter...')
-    //todo here we ll make our action to fill our database
     var counter = 0;
     var c = 0;
     $(".loading-page .counter h1").html(c + "%");
@@ -98,16 +96,32 @@ function apiSuppliers(counter, c) {
             $(".loading-page .counter h1").html(c + "%");
             $(".loading-page .counter hr").css("width", c + "%");
             if (counter == toReach) {
+                $('#loadingAction').text("Récupération des logs");
                 clearInterval(i);
-                displayLogin(counter, c)
+                apiLogs(counter, c)
             }
         }, 50)
     })
 }
 
+function apiLogs(counter, c) {
+    apiHelper.getLogs().then(() => {
+        let toReach = 40;
+        var i = setInterval(function () {
+            counter++;
+            c++;
+            $(".loading-page .counter h1").html(c + "%");
+            $(".loading-page .counter hr").css("width", c + "%");
+            if (counter == toReach) {
+                clearInterval(i);
+                displayLogin(counter, c)
+            }
+        })
+    })
+}
+
 function displayLogin(counter, c) {
     loggerUICore.log('UICore Display login...')
-    //todo here we ll display login and hide updating
     var i = setInterval(async function () {
         $(".loading-page .counter h1").html(c + "%");
         $(".loading-page .counter hr").css("width", c + "%");
@@ -141,26 +155,14 @@ function displayLogin(counter, c) {
                     $('.loading-page').fadeOut(500)
                     $('.app-content').fadeIn(500)
                     main = $("#main")
-                    /*if (localStorage.getItem('vue')) {
-                        var page = localStorage.getItem('vue')
-                        var obj = JSON.parse(page)
-                        ejs.renderFile(obj.page, {}, {}, (err, str) => {
-                            if (err) {
-                                console.log(err)
-                            } else {
-                                $("#main").append(str)
-                                $(obj.div).show()
-                            }
-                        })
-                    } else {*/
-                        ejs.renderFile(loginPage, {}, {}, (err, str) => {
-                            if (err) {
-                                console.log(err)
-                            } else {
-                                $("#main").append(str)
-                            }
-                        })
-                    //}
+
+                    ejs.renderFile(loginPage, {}, {}, (err, str) => {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            $("#main").append(str)
+                        }
+                    })
                 }
             })
         }

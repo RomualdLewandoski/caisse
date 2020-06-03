@@ -24,6 +24,15 @@ const supplierView = {
     div: "#supplierView"
 }
 
+const logListBox = {
+    file: path.join(__dirname, "vue", "logList.ejs"),
+    div: "#logList"
+}
+
+const logView = {
+    file: path.join(__dirname, "vue", "logView.ejs"),
+    div: "#logView"
+}
 
 function showBox(box, perms, id = 0) {
     if (perms) {

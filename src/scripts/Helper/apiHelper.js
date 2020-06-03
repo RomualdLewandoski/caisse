@@ -112,18 +112,18 @@ var getUser = module.exports.getUsers = async function getUsers() {
                             })
                                 .catch((err) => {
                                     let __OBFID = "f3421fed-10d8-4fb4-a320-01e3ecf67cf6"
-                                    errorHelper.log("update user ",__OBFID, err)
+                                    errorHelper.log("update user ", __OBFID, err)
                                 })
                         }
                     }).catch((err) => {
                     let __OBFID = "6cc42341-b722-4799-98a8-31db20620aa6"
-                    errorHelper.log("select users from local base",__OBFID, err)
+                    errorHelper.log("select users from local base", __OBFID, err)
                 })
             }
             return true;
         }).catch((err) => {
             let __OBFID = "ca15fb87-7770-4a22-b226-a23a6be58923"
-            errorHelper.log("Api call for get users",__OBFID, err)
+            errorHelper.log("Api call for get users", __OBFID, err)
             return false
         })
     }
@@ -168,7 +168,7 @@ var getSuppliers = module.exports.getSuppliers = async function () {
                                 console.log("INSERT OK")
                             }).catch((err) => {
                                 let __OBFID = "3f7df55c-b143-4181-b05c-5c4c898caeee"
-                                errorHelper.log("insert supplier ",__OBFID, err)
+                                errorHelper.log("insert supplier ", __OBFID, err)
                             })
                         } else {
                             knex("Supplier").where('idWp', supplier.idSupplier).update({
@@ -198,25 +198,63 @@ var getSuppliers = module.exports.getSuppliers = async function () {
                                 console.log("UPDATE COMPLETE")
                             }).catch((err) => {
                                 let __OBFID = "a3d9c668-863c-471a-9c60-878c90a36ca1"
-                                errorHelper.log("update supplier ",__OBFID, err)
+                                errorHelper.log("update supplier ", __OBFID, err)
                             })
                         }
                     }).catch((err) => {
                     let __OBFID = "47cc4cb2-02e0-4809-b9bb-ef867e49e2bc"
-                    errorHelper.log("select suppliers from local base",__OBFID, err)
+                    errorHelper.log("select suppliers from local base", __OBFID, err)
                 })
             }
             return true
         }).catch((err) => {
             let __OBFID = "c1907528-a22f-4fe9-bfa3-13cf9030ef64"
-            errorHelper.log("Api call for get suppliers",__OBFID, err)
+            errorHelper.log("Api call for get suppliers", __OBFID, err)
             return false
         })
     }
 }
 
-module.exports.getLogs = function () {
-
+module.exports.getLogs = async function () {
+    if (connection) {
+        var request = post(configObj.host, getSlug(configObj.host, "api/logs"), {apiKey: configObj.privateKey})
+        request.then(function (response) {
+            var obj = JSON.parse(response);
+            let x;
+            for (x in obj.logs) {
+                let log = obj.logs[x];
+                knex().select().table('Logs').where('idLog', log.idLog)
+                    .then((r) => {
+                        if (r.length == 0) {
+                            knex('Logs').insert({
+                                idLog: log.idLog,
+                                userLog: log.userLog,
+                                dateLog: log.dateLog,
+                                typeLog: log.typeLog,
+                                actionLog: log.actionLog,
+                                targetIdLog: log.targetIdLog,
+                                beforeLog: log.beforeLog,
+                                afterLog: log.afterLog,
+                                diff: log.diff
+                            }).then((r) => {
+                                console.log("INSERT OK")
+                            }).catch((err) => {
+                                let __OBFID = "f28914e6-e03a-4a5b-b996-00e111c2df83"
+                                errorHelper.log("Insert log", __OBFID, err)
+                            })
+                        }
+                    }).catch((err) => {
+                    let __OBFID = "9db83bcc-3d60-4376-867b-77dcfa07913b"
+                    errorHelper.log("Select Logs from local base", __OBFID, err)
+                })
+            }
+            return true;
+        }).catch((err) => {
+            let __OBFID = "b6802571-7bee-430c-864a-02b1007d5aac"
+            errorHelper.log("Api call for get logs", __OBFID, err)
+            return false;
+        })
+    }
 }
 
 module.exports.getProducts = function () {

@@ -44,7 +44,7 @@ var loginUser = module.exports.loginUser = async function loginUser(userName, pa
         }
     }).catch((err) => {
         let __OBFID = "81023b9f-06a7-4a80-8d9f-1ccf5dfd06b6"
-        errorHelper.log("Get user by Name Login ",__OBFID, err)
+        errorHelper.log("Get user by Name Login ", __OBFID, err)
     })
     return obj
 }
@@ -80,7 +80,7 @@ var getSession = exports.getSession = async function () {
                 flag = r
             }).catch((err) => {
                 let __OBFID = "b5301b75-5280-471f-a46d-66d3dd37c328"
-                errorHelper.log("Get user by idWp Login ", __OBFID,err)
+                errorHelper.log("Get user by idWp Login ", __OBFID, err)
                 flag = false
             })
         }
@@ -110,7 +110,7 @@ var changePass = exports.changePass = async function (idWp, newPass) {
         }
     }).catch((err) => {
         let __OBFID = "6026ead9-36f4-4e1c-8205-6ff78ec20f6d"
-        errorHelper.log("Updating UserPassword ",__OBFID, err)
+        errorHelper.log("Updating UserPassword ", __OBFID, err)
         ret = {
             state: false
         }
@@ -136,11 +136,11 @@ var changePass = exports.changePass = async function (idWp, newPass) {
                     state: false
                 }
                 let __OBFID = "554912b1-ba5d-4e02-8c6f-ef9e25ada484"
-                errorHelper.log("Error change password api",__OBFID, r.error)
+                errorHelper.log("Error change password api", __OBFID, r.error)
             }
         }).catch((err) => {
             let __OBFID = "d8420d66-f124-4d89-9e88-d213905e3460"
-            errorHelper.log("Error request api change pass",__OBFID, err)
+            errorHelper.log("Error request api change pass", __OBFID, err)
             ret = {
                 state: false
             }
@@ -162,7 +162,7 @@ var changePass = exports.changePass = async function (idWp, newPass) {
             }
         }).catch((err) => {
             let __OBFID = "13cb9772-5623-45d8-adad-aa78b70e6fbb"
-            errorHelper.log("Add to updatePending editPass",__OBFID, err)
+            errorHelper.log("Add to updatePending editPass", __OBFID, err)
             ret = {
                 state: false
             }
@@ -171,4 +171,21 @@ var changePass = exports.changePass = async function (idWp, newPass) {
 
     return ret;
 }
+
+/*var getUser = module.exports.getUser = async function () {
+    var session = localStorage.getItem('user')
+    if (!session) {
+        return null;
+    } else {
+        let obj = JSON.parse(atob(session));
+        let request = knex().select().table("ShopLogin").where('idWp', obj.idWp)
+        await request.then((r) => {
+            return r;
+        }).catch((err) => {
+            let __OBFID = "508ce6c8-e363-4c3a-ac69-92ebb96652b3"
+            errorHelper.log("Get User by localStorage session", __OBFID, err)
+            return null;
+        })
+    }
+}*/
 

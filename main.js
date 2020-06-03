@@ -68,7 +68,7 @@ try {
     console.error(e)
 }
 var d = new Date();
-const errFile = "error-" + (d.getDate()<10 ? "0"+d.getDate() : d.getDate()) + "-" + (d.getMonth()< 10 ? "0"+(d.getMonth()+1) : (d.getMonth()+1)) + "-" + d.getFullYear() + ".log";
+const errFile = "error-" + (d.getDate() < 10 ? "0" + d.getDate() : d.getDate()) + "-" + (d.getMonth() < 10 ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1)) + "-" + d.getFullYear() + ".log";
 const config = configFolder + "/config.json";
 /**
  * CREATING CONFIG.JSON IF NOT EXIST
@@ -152,6 +152,21 @@ knex.schema.createTableIfNotExists("Supplier", function (table) {
 }).then(() => {
     console.log("Table Supplier created")
 })
+
+knex.schema.createTableIfNotExists("Logs", function (table) {
+    table.integer("idLog")
+    table.string("userLog")
+    table.string("dateLog")
+    table.string("typeLog")
+    table.string("actionLog")
+    table.integer("targetIdLog")
+    table.text("beforeLog")
+    table.text("afterLog")
+    table.text("diff")
+}).then(() => {
+    console.log("Table Logs created")
+})
+
 // Reload index.html everytime the source files change
 
 // Keep a global reference of the window object, if you don't, the window will
