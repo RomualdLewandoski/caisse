@@ -39,7 +39,7 @@
     "github-syntax-dark": "^0.5.0",
     "hyperapp": "^1.0.1",
     "hyperapp-redux-devtools": "^1.1.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-resizable-dom": "^0.35.0",
     "jquery-ui-dist": "^1.12.1",
     "knex": "^0.19.0",
