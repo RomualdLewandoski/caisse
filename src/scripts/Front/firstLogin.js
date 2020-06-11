@@ -26,6 +26,7 @@ function changePass(password, conf) {
                         }
                     })
                     switchView(currentView, VIEWS.admin, 500, 500)
+
                 } else {
                     swal("Erreur", "La modification du mot de passe a échouée", "error")
                 }

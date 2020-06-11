@@ -179,45 +179,34 @@ async function saveEdit() {
 
             data['apiKey'] = configObj.privateKey
             data.contact = btoa(JSON.stringify(contact))
+            data.loginUserName = user.usernameShopLogin
+
             let reqSelect = knex().select().table('Supplier').where('idSupplier', id)
             await reqSelect.then((r) => {
                 data['idWp'] = r[0].idWp
+                data['idLocal'] = r[0].idSupplier
             })
             let connection
             await apiHelper.isOnline().then((r) => {
                 connection = r
             })
-            if (result && connection) {
-                var api = apiHelper.post(configObj.host, apiHelper.getSlug(configObj.host, "api/suppliers/edit"), data)
-                await api.then((response) => {
-                    let obj = JSON.parse(response)
-                    if (obj.state == 0) {
-                        swal('Erreur', obj.error, 'error')
-                    } else if (obj.state == 1) {
+
+            if(result){
+                updater.addToThread("supplier", "edit", data).then((r) => {
+                    if (r){
+                        if (connection){
+                            updater.doUpdate().then(() => {})
+                        }
                         swal('Succès', "Le fournisseur a bien été modifié", "success")
-                    } else {
-                        swal('Erreur', "Le code de réponse est incorrect : " + obj.state, "error")
+                    }else{
+                        swal('Attention', "Le fournisseur a bien été modifié mais la mise a jour site n'as pas été faite, l'opération serra annulée au rechargement de la caisse consultez le rapport d'erreur pour plus d'information", "warning")
                     }
                 }).catch((err) => {
-                    let __OBFID = "522ccd0e-f244-460d-b399-e2650801479d"
-                    errorHelper.log("Edit supplier Api call ", __OBFID, err)
-                })
-            } else if (result && !connection) {
-                let str = JSON.stringify(data)
-                let update = knex("updatePending").insert({
-                    type: "supplier",
-                    action: "edit",
-                    value: btoa(str)
-                })
-                await update.then((r) => {
-                    swal('Succès', "Le fournisseur a bien été modifié", "success")
-                }).catch((err) => {
-                    swal('Attention', "Le fournisseur a bien été modifié mais la mise a jour site n'as pas été faite, l'opération serra annulée au rechargement de la caisse consultez le rapport d'erreur pour plus d'information", "warning")
-                    let __OBFID = "b43b3c98-2eff-482c-88de-8c75f66317f9"
-                    errorHelper.log("Add to updatePending addSupplier",__OBFID, err)
-
+                    let __OBFID = "4913850a-4eed-4a39-9e28-c9a2f59d6f9b"
+                    errorHelper.log("addToThread for edit supplier " + JSON.stringify(data), __OBFID, err)
                 })
             }
+
         }
     }
 

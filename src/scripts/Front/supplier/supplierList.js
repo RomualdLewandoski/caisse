@@ -129,7 +129,7 @@ function openEdit(id) {
     setTimeout(toggleBox(supplierEdit.div), 300)
 }
 
-function openView(id){
+function openView(id) {
     showBox(supplierView, true, id)
     setTimeout(toggleBox(supplierView.div), 300)
 
@@ -154,40 +154,32 @@ async function deleteSupplier(id) {
     })
     let data = {
         apiKey: configObj.privateKey,
-        idWp: idWp
+        idWp: idWp,
+        idLocal: id
+
     }
+    data.loginUserName = user.usernameShopLogin
+
     let connection;
     await apiHelper.isOnline().then((r) => {
         connection = r
     })
-    if (result && connection) {
-        let api = apiHelper.post(configObj.host, apiHelper.getSlug(configObj.host, "api/suppliers/delete"), data)
-        await api.then(async (response) => {
-            let obj = JSON.parse(response)
-            if (obj.state == 0) {
-                swal('Erreur', obj.error, 'error')
-            } else if (obj.state == 1) {
+
+    if (result) {
+        updater.addToThread("supplier", "delete", data).then((r) => {
+            if (r) {
+                if (connection) {
+                    updater.doUpdate().then(() => {
+                    })
+                }
                 swal('Succès', "Le fournisseur a bien été retiré", "success")
             } else {
-                swal('Erreur', "Le code de réponse est incorrect : " + obj.state, "error")
+                swal('Warning', "L'action n'as pu être enregistrée dans les tâches a faire, il est possible que le fournisseur soit toujours présent sur le site", "warning")
             }
         }).catch((err) => {
-            let __OBFID = "abded570-3f49-4319-bcaf-b7583cdeba80"
-            errorHelper.log("Delete supplier Api Call", __OBFID, err)
-        })
-    } else if (result && !connection) {
-        let str = JSON.stringify(data)
-        let update = knex("updatePending").insert({
-            type: "supplier",
-            action: "delete",
-            value: btoa(str)
-        })
-        await update.then((r) => {
-            swal('Succès', "Le fournisseur a bien été retiré", "success")
-        }).catch((err) => {
-            let __OBFID = "fcf1c927-58af-4455-840f-7e4447dad56b"
-            errorHelper.log("Add to updatePending deleteSupplier", __OBFID, err)
-            swal('Warning', "L'action n'as pu etre entregistré dans les tâches a faire, il est possible que le fournisseur soit toujours présent sur le site", "warning")
+            let __OBFID = "887d5daa-c7bf-47ae-92ce-38b91c362bee"
+            errorHelper.log("addToThread for delete supplier " + JSON.stringify(data), __OBFID, err)
         })
     }
+
 }

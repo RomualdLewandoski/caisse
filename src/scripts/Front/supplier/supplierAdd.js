@@ -114,53 +114,26 @@ async function saveAddSupplier() {
 
             data['apiKey'] = configObj.privateKey
             data.contact = btoa(JSON.stringify(contact))
+            data.loginUserName = user.usernameShopLogin
             let connection;
             await apiHelper.isOnline().then((r) => {
                 connection = r
             })
-            if (result && connection) {
-                var api = apiHelper.post(configObj.host, apiHelper.getSlug(configObj.host, "api/suppliers/add"), data)
-                await api.then(async (response) => {
-                    let obj = JSON.parse(response)
-                    console.log(obj)
-                    if (obj.state == 0) {
-                        swal('Erreur', obj.error, 'error')
-                    } else if (obj.state == 1) {
-                        let update = knex("Supplier").where('societyName', societyName).update({
-                            idWp: obj.idWp
-                        })
-                        await update.then((r) => {
-                            swal('Succès', "Le fournisseur a bien été ajouté", "success")
-                        }).catch((err) => {
-                            let __OBFID = "125de99e-b9fa-4595-aa76-62480825c7d4"
-                            errorHelper.log("Updating idWp when supplierAdd",__OBFID, err)
-                            swal('Erreur', "Merci de consulter les logs")
-                        })
+
+            if (result) {
+                updater.addToThread("supplier", "add", data).then((r) => {
+                    if (r) {
+                        if (connection) {
+                            updater.doUpdate().then(() => {
+                            })
+                        }
+                        swal('Succès', "Le fournisseur a bien été ajouté", "success")
                     } else {
-                        swal('Erreur', "Le code de réponse est incorrect : " + obj.state, "error")
+                        swal('Attention', "Le fournisseur a bien été ajouté mais la mise a jour site n'as pas été faite, l'opération va etre annulé consultez le rapport d'erreur pour plus d'information", "warning")
                     }
-                }).catch((err) => {
-                    let __OBFID = "da0503e2-2f3d-46e8-af4b-2db56529840b"
-                    errorHelper.log("Add supplier Api call ", __OBFID,err)
-                })
-            } else if (result && !connection) {
-                let str = JSON.stringify(data)
-                let update = knex("updatePending").insert({
-                    type: "supplier",
-                    action: "add",
-                    value: btoa(str)
-                })
-                await update.then((r) => {
-                    swal('Succès', "Le fournisseur a bien été ajouté", "success")
-                }).catch((err) => {
-                    swal('Attention', "Le fournisseur a bien été ajouté mais la mise a jour site n'as pas été faite, l'opération va etre annulé consultez le rapport d'erreur pour plus d'information", "warning")
-                    let __OBFID = "5181b0c6-e231-4c86-a0ba-cf1880688489"
-                    errorHelper.log("Add to updatePending addSupplier",__OBFID, err)
-                    knex('Supplier').where("societyName", societyName).delete().then((r) => {
-                    }).catch((err) => {
-                        let __OBFID = "a838e4fe-9c79-4006-a758-5eff4f4fd911"
-                        errorHelper.log("Remove supplier added cause  updatePending fail", __OBFID, err)
-                    })
+                }).catch((err) =>{
+                    let __OBFID = "4098bb00-aa09-42d1-8f52-8dc3f4800231"
+                    errorHelper.log("addToThread for add supplier" + JSON.stringify(data), __OBFID, err)
                 })
             }
         }
@@ -180,7 +153,7 @@ async function getWhere(row, value) {
     }).catch((err) => {
         toRet = null
         let __OBFID = "1483f9e4-ee96-43f6-ba52-72b0f4f6cbbd"
-        errorHelper.log("getWhere Supplier " + row + " = " + value + " ",__OBFID, err)
+        errorHelper.log("getWhere Supplier " + row + " = " + value + " ", __OBFID, err)
     })
     return toRet
 }
