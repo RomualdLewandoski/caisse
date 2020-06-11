@@ -89,83 +89,26 @@ var knex = require("knex")({
     client: "sqlite3",
     connection: {
         filename: database
+    },
+    migrations: {
+        tableName: 'knex_migrations'
     }
 });
 /**
  * CREATE OUR TABLES HERE
  */
-knex.schema.createTableIfNotExists("PermissionModel", function (table) {
-    table.increments('idPermissionModel');
-    table.integer('idWp');
-    table.string('namePermissionModel');
-    table.boolean('hasAdmin');
-    table.boolean('hasCompta');
-    table.boolean('hasProductManagement');
-    table.boolean('hasSupplierManagement');
-    table.boolean('hasStock');
-    table.boolean('hasCaisse');
-}).then(() => {
-    console.log("Table permissionModel created")
+const latestVersion = "20200611131715"
+knex.migrate.currentVersion().then((r) => {
+    let currentVersion = r;
+    if (currentVersion < latestVersion) {
+        knex.migrate.latest().then(value => {
+            console.log("Database migrated to latestVersion " + latestVersion)
+        })
+    }else{
+        console.log("Database already on latest version")
+    }
 })
 
-knex.schema.createTableIfNotExists('ShopLogin', function (table) {
-    table.increments('idShopLogin');
-    table.integer('idWp');
-    table.string('usernameShopLogin');
-    table.string('passwordShopLogin');
-    table.boolean('hasAdmin');
-    table.boolean('hasCompta');
-    table.boolean('hasProductManagement');
-    table.boolean('hasSupplierManagement');
-    table.boolean('hasStock');
-    table.boolean('hasCaisse');
-    table.boolean('isDefaultPass');
-}).then(() => {
-    console.log("Table ShopLogin created")
-})
-
-knex.schema.createTableIfNotExists("Supplier", function (table) {
-    table.increments("idSupplier")
-    table.integer("idWp")
-    table.boolean("isSociety")
-    table.string("societyName")
-    table.string("gender", 20)
-    table.string("firstName")
-    table.string("lastName")
-    table.string("address")
-    table.string("zipCode", 50)
-    table.string("city")
-    table.string("country")
-    table.string("phone")
-    table.string("mobilePhone")
-    table.string("mail")
-    table.string("refCode", 100)
-    table.string("webSite")
-    table.integer("paymentType")
-    table.string("iban")
-    table.string("bic")
-    table.string("tva")
-    table.string("siret")
-    table.text("contact")
-    table.text("notes")
-    table.boolean("isActive")
-}).then(() => {
-    console.log("Table Supplier created")
-})
-
-knex.schema.createTableIfNotExists("Logs", function (table) {
-    table.integer("idLog")
-    table.string("userLog")
-    table.string("dateLog")
-    table.string("typeLog")
-    table.string("actionLog")
-    table.integer("targetIdLog")
-    table.text("beforeLog")
-    table.text("afterLog")
-    table.text("diff")
-}).then(() => {
-    console.log("Table Logs created")
-})
 
 // Reload index.html everytime the source files change
 

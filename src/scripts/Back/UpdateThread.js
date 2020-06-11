@@ -36,45 +36,173 @@ async function doUpdate() {
         let x;
         for (x in obj) {
             var row = obj[x]
-            var req = apiHelper.post(configObj.host, apiHelper.getSlug(configObj.host, "api/updater"), {
-                apiKey: configObj.privateKey,
-                type: row.type,
-                action: row.action,
-                value: row.value
-            });
-            await req.then(async (result) => {
-                let obj = JSON.parse(result)
-                if (obj.state == 0) {
-                    let __OBFID = "3199c6fd-8ba0-4e2d-a3ea-dcde2ebe44df"
-                    errorHelper.log("Api updater send error", __OBFID, obj.error)
-                } else {
-                    if (obj.action == "AddSupplier") {
-                        knex("Supplier").where('societyName', obj.societyName).update({
-                            idWp: obj.idWp
-                        }).then((r) => {
-                        }).catch((err) => {
-                            let __OBFID = "755a7da5-c814-4ad9-80b7-5ace8de34356"
-                            errorHelper.log("Api updater update idWp for add supplier", __OBFID, err)
+            let getId = await retriveIdWp(row)
+            if (getId.state) {
+                var req = apiHelper.post(configObj.host, apiHelper.getSlug(configObj.host, "api/updater"), {
+                    apiKey: configObj.privateKey,
+                    type: row.type,
+                    action: row.action,
+                    value: getId.value
+                })
+                await req.then(async (result) => {
+
+                    let obj = JSON.parse(result)
+                    if (obj.state == 0) {
+                        let __OBFID = "3199c6fd-8ba0-4e2d-a3ea-dcde2ebe44df"
+                        errorHelper.log("Api updater send error", __OBFID, obj.error)
+                        await deleteLog(row)
+                    } else {
+                        if (obj.action == "AddSupplier") {
+                            knex("Supplier").where('societyName', obj.societyName).update({
+                                idWp: obj.idWp
+                            }).then((r) => {
+                            }).catch((err) => {
+                                let __OBFID = "755a7da5-c814-4ad9-80b7-5ace8de34356"
+                                errorHelper.log("Api updater update idWp for add supplier", __OBFID, err)
+                            })
+                        } else if (obj.action == "delete") {
+                            //todo ici on va faire le delete de l'entrée dans la table
+                            console.log(obj)
+                            let table, idWp;
+                            let temp = getTable(obj.type);
+                            if (temp != null) {
+                                console.log(temp)
+                                table = temp.table
+                                idWp = temp.idWp
+                                let req = knex(table).where(idWp, obj.targetIdLog).delete()
+                                await req.then(() => {
+                                }).catch((err) => {
+                                    let __OBFID = "2a4fd490-fba8-435c-8f6f-b190dfe791a1"
+                                    errorHelper.log("Delete entry after rollback", __OBFID, err)
+                                })
+                            }
+
+                        }
+                        await apiHelper.getLogId(obj.idLog).then(() => {
                         })
+                        await deleteLog(row)
                     }
-                    //fixme this is not a good solution perhaps we ll handle an error system here
-                    await knex.delete().table('updatePending').where('id', row.id).then(() => {
-                    }).catch((err) => {
-                        let __OBFID = "754e41b2-06c4-49a5-8957-bc7d57db2f85"
-                        errorHelper.log("Error while deleting on UpdatePending for " + row, __OBFID, err)
-                    })
-                }
-            }).catch((err) => {
-                let __OBFID = "439b3e9e-dcb6-4e01-9490-b587d464abb2"
-                errorHelper.log("updater contact api/updater", __OBFID,err)
-            })
+                }).catch((err) => {
+                    let __OBFID = "439b3e9e-dcb6-4e01-9490-b587d464abb2"
+                    errorHelper.log("updater contact api/updater", __OBFID, err)
+                })
+            } else {
+                await deleteLog(row)
+            }
+
         }
+        apiHelper.getPerms().then(() => {
+            console.log("Update perms from site")
+        })
+        apiHelper.getUsers().then(() => {
+            console.log("Update User from site")
+        })
+        apiHelper.getSuppliers().then(() => {
+            console.log("Update Supplier from site")
+        })
+        apiHelper.getLogs().then(() => {
+            console.log("Update Logs from site")
+        })
     }
 
+}
+
+async function deleteLog(row) {
+    await knex.delete().table('updatePending').where('id', row.id).then(() => {
+    }).catch((err) => {
+        let __OBFID = "754e41b2-06c4-49a5-8957-bc7d57db2f85"
+        errorHelper.log("Error while deleting on UpdatePending for " + row, __OBFID, err)
+    })
+}
+
+async function retriveIdWp(row) {
+    let value = row.value
+    let action = row.action
+    let type = row.type
+    let obj = JSON.parse(atob(value))
+    let ret = true;
+    switch (action) {
+        case "edit":
+        case "delete":
+            if (obj.idWp == null || obj.idWp == undefined) {
+                switch (type) {
+                    case "supplier":
+                        let req = knex().select().table("Supplier").where('idSupplier', obj.idLocal)
+                        await req.then(async (r) => {
+                            if (r.length == 0) {
+                                let del = knex("Supplier").delete().where('idSupplier', obj.idLocal)
+                                await del.then(() => {
+                                    ret = false;
+                                }).catch((err) => {
+                                    ret = false
+                                    let __OBFID = "5d8a92b6-934c-4af2-aea2-d624617a299f"
+                                    errorHelper.log("UpdateThread remove entry cause no idWp found", __OBFID, err)
+                                })
+                            } else {
+                                obj.idWp = r[0].idWp
+                                delete obj.idLocal
+                            }
+                        }).catch((err) => {
+                            ret = false
+                            let __OBFID = "1869c676-1a3a-4894-a1e2-2b2c5c0e3b96"
+                            errorHelper.log("UpdateThread select to get idWp", __OBFID, err)
+                        })
+                        break;
+                }
+            } else {
+                delete obj.idLocal
+            }
+            break;
+        default:
+            delete obj.idLocal
+            break;
+    }
+    return {
+        state: ret,
+        value: btoa(JSON.stringify(obj))
+    }
+}
+
+async function addToThread(type, action, value) {
+    let str = JSON.stringify(value)
+    let ret;
+    let update = knex("updatePending").insert({
+        type: type,
+        action: action,
+        value: btoa(str)
+    })
+    await update.then(() => {
+        ret = true
+    }).catch((err) => {
+        ret = false
+        let __OBFID = "4715b7d7-9e51-4779-bf0e-7eb3483279cb"
+        errorHelper.log("Add to thread for " + type + " " + action + " " + str, __OBFID, err)
+    })
+    return ret
+}
+
+function getTable(type) {
+    type = type.toLowerCase();
+    let data;
+    switch (type) {
+        case "permissionmodel":
+            data = {table: "PermissionModel", idWp: "idWp", type: "permissionmodel"}
+            break
+        case "suppliermodel":
+            data = {table: "Supplier", idWp: "idWp", type: "suppliermodel"}
+            break
+        case "usermodel":
+            data = {table: "ShopLogin", idWp: "idWp", type: "usermodel"}
+            break
+        default:
+            data = null
+    }
+    return data
 }
 
 module.exports = {
     createTables,
     updateLoop,
-    doUpdate
+    doUpdate,
+    addToThread
 }

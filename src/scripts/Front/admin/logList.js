@@ -13,7 +13,6 @@ function loadLogs() {
     table.clear()
     knex().select().table("Logs").orderBy("dateLog", "ASC").then((r) => {
         let x;
-        console.log(r)
         for (x in r) {
             let row = r[x]
             let rowNode = table.row.add([
@@ -22,8 +21,8 @@ function loadLogs() {
                     row.typeLog,
                     row.actionLog,
                     row.dateLog,
-                    `<button id='showLog' class='btn btn-success' onclick="openLog(` + row.idLog + `)"> Voir </button> `+
-                    `<button id='rollbackLog' class='btn btn-warning'>Rollback</button>`
+                    `<button id='showLog' class='btn btn-success' onclick="openLog(` + row.idLog + `)"> Voir </button> ` +
+                    `<button id='rollbackLog' class='btn btn-warning' onclick="rollbackLog(` + row.idLog + `)">Rollback</button>`
                 ]
             ).draw().node()
             if (row.actionLog == "Create") {
@@ -43,6 +42,27 @@ function openLog(id) {
     setTimeout(toggleBox(logView.div), 300)
 }
 
-function rollbackLog(id) {
-
+async function rollbackLog(id) {
+    let data = {
+        idLog: id,
+        loginUserName: user.usernameShopLogin
+    }
+    let connection;
+    await apiHelper.isOnline().then((r) => {
+        connection = r
+    })
+    updater.addToThread("log", "rollback", data).then((r) => {
+        if (r) {
+            if (connection) {
+                updater.doUpdate().then(() => {
+                })
+            }
+            swal('Succès', "Le log a bien été rollback", "success")
+        } else {
+            swal("Attention", "Le log n'as pas été rollback car la mise a jour site n'as pu etre effectuée", "error");
+        }
+    }).catch((err) => {
+        let __OBFID = "7cf362f7-58a2-4d20-8db2-5c447e7a0f9f"
+        errorHelper.log("addToThread for rollbackLog", __OBFID, err)
+    })
 }
