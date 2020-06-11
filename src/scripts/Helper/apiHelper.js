@@ -215,10 +215,50 @@ var getSuppliers = module.exports.getSuppliers = async function () {
     }
 }
 
+module.exports.getLogId = async function (idLog) {
+    if (connection) {
+        var request = post(configObj.host, getSlug(configObj.host, "api/logs/getId"), {
+            apiKey: configObj.privateKey,
+            idLog: idLog
+        })
+        request.then((response) => {
+            var obj = JSON.parse(response)
+            var log = obj.logs
+            knex().select().table('Logs').where('idLog', log.idLog).then((r) => {
+                if (r.length == 0) {
+                    knex('Logs').insert({
+                        idLog: log.idLog,
+                        userLog: log.userLog,
+                        dateLog: log.dateLog,
+                        typeLog: log.typeLog,
+                        actionLog: log.actionLog,
+                        targetIdLog: log.targetIdLog,
+                        beforeLog: log.beforeLog,
+                        afterLog: log.afterLog,
+                        diff: log.diff
+                    }).then(() => {
+                        console.log("INSERT OK")
+                    }).catch((err) => {
+                        let __OBFID = "06b44f58-77be-4e52-abe6-51eef4081f0c"
+                        errorHelper.log("Insert last log", __OBFID, err)
+                    })
+                }
+            }).catch((err) => {
+                let __OBFID = "fa579b2c-225c-41cc-8a52-580ce8593293"
+                errorHelper.log("select log on local base", __OBFID, err)
+            })
+        }).catch((err) => {
+            let __OBFID = "22164f4f-e34e-4afc-9631-ec8046e63a52"
+            errorHelper.log("Api Call for get log by id", __OBFID, err)
+        })
+    }
+}
+
 module.exports.getLogs = async function () {
     if (connection) {
         var request = post(configObj.host, getSlug(configObj.host, "api/logs"), {apiKey: configObj.privateKey})
         request.then(function (response) {
+
             var obj = JSON.parse(response);
             let x;
             for (x in obj.logs) {

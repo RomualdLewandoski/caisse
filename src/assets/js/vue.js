@@ -20,11 +20,14 @@ const VIEWS = {
 
 // The currently shown view container.
 let currentView = VIEWS.login;
-if (localStorage.getItem('vue')) {
-    currentView = localStorage.getItem('vue')
-} else {
-    currentView = VIEWS.login
+if (localStorage.getItem('user')){
+    if (localStorage.getItem('vue')) {
+        currentView = localStorage.getItem('vue')
+    } else {
+        currentView = VIEWS.login
+    }
 }
+
 
 var currentIndexBox = ''
 var boxList = new Array()

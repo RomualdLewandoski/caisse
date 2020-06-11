@@ -119,73 +119,23 @@ var changePass = exports.changePass = async function (idWp, newPass) {
     await apiHelper.isOnline().then((r) => {
         connection = r
     })
-    if (ret.state == true && connection) {
-        var req = apiHelper.post(configObj.host, apiHelper.getSlug(configObj.host, "api/users/changepass"), {
-            apiKey: configObj.privateKey,
-            idWp: idWp,
-            newPass: hash
-        });
-        await req.then((response) => {
-            let r = JSON.parse(response)
-            if (r.state == 0) {
-                ret = {
-                    state: true
-                }
-            } else {
-                ret = {
-                    state: false
-                }
-                let __OBFID = "554912b1-ba5d-4e02-8c6f-ef9e25ada484"
-                errorHelper.log("Error change password api", __OBFID, r.error)
-            }
-        }).catch((err) => {
-            let __OBFID = "d8420d66-f124-4d89-9e88-d213905e3460"
-            errorHelper.log("Error request api change pass", __OBFID, err)
-            ret = {
-                state: false
-            }
-        })
-    } else if (ret.state == true && !connection) {
+
+    if (ret.state) {
         let value = {
             idWp: idWp,
-            newPass: hash
+            newPass: hash,
+            loginUserName: user.usernameShopLogin
         }
-        let str = JSON.stringify(value);
-        let db = knex('updatePending').insert({
-            type: "user",
-            action: "editpass",
-            value: btoa(str)
-        })
-        await db.then((r) => {
-            ret = {
-                state: true
+        updater.addToThread("user", "editpass", value).then(() => {
+            if (connection){
+                updater.doUpdate().then(() => {})
             }
         }).catch((err) => {
-            let __OBFID = "13cb9772-5623-45d8-adad-aa78b70e6fbb"
-            errorHelper.log("Add to updatePending editPass", __OBFID, err)
-            ret = {
-                state: false
-            }
+            let __OBFID = "fec320d0-8b7c-4074-95a0-921c56a45044"
+            errorHelper.log("addToThread for edit password " + JSON.stringify(value), __OBFID, err)
         })
     }
 
     return ret;
 }
-
-/*var getUser = module.exports.getUser = async function () {
-    var session = localStorage.getItem('user')
-    if (!session) {
-        return null;
-    } else {
-        let obj = JSON.parse(atob(session));
-        let request = knex().select().table("ShopLogin").where('idWp', obj.idWp)
-        await request.then((r) => {
-            return r;
-        }).catch((err) => {
-            let __OBFID = "508ce6c8-e363-4c3a-ac69-92ebb96652b3"
-            errorHelper.log("Get User by localStorage session", __OBFID, err)
-            return null;
-        })
-    }
-}*/
 

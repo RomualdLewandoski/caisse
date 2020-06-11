@@ -1,26 +1,7 @@
 /* Github Code Highlighting. */
 @import "../../../node_modules/github-syntax-dark/lib/github-dark.css";
 
-/*******************************************************************************
- *                                                                             *
- * Fonts                                                                       *
- *                                                                             *
- ******************************************************************************/
 
-@font-face {
-    font-family: 'Avenir Book';
-    src: url('../fonts/Avenir-Book.ttf');
-}
-
-@font-face {
-    font-family: 'Avenir Medium';
-    src: url('../fonts/Avenir-Medium.ttf');
-}
-
-@font-face {
-    font-family: 'Ringbearer';
-    src: url('../fonts/Ringbearer.ttf');
-}
 
 /*******************************************************************************
  *                                                                             *
