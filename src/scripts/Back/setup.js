@@ -40,16 +40,34 @@ function loadFromApi() {
     var c = 0;
     $(".loading-page .counter h1").html(c + "%");
     $(".loading-page .counter hr").css("width", c + "%");
-    $('#loadingAction').text("Récupération des permissions");
+    $('#loadingAction').text("Envoie des modifications en attente");
 
-    apiPerms(counter, c)
+    sendUpdate(counter, c)
+}
+
+function sendUpdate(counter, c) {
+    updater.doUpdate(true).then(() =>{
+        let toReach = 10;
+        var i = setInterval(() => {
+            if (counter == toReach) {
+                $('#loadingAction').text("Récupération des permissions");
+                clearInterval(i);
+                apiPerms(counter, c)
+            }else{
+                counter++;
+                c++;
+                $(".loading-page .counter h1").html(c + "%");
+                $(".loading-page .counter hr").css("width", c + "%");
+            }
+        })
+    })
 }
 
 function apiPerms(counter, c) {
 
     apiHelper.getPerms().then(function () {
 
-        let toReach = 10;
+        let toReach = 20;
         var i = setInterval(function () {
 
             if (counter == toReach) {
@@ -70,7 +88,7 @@ function apiPerms(counter, c) {
 
 function apiUsers(counter, c) {
     apiHelper.getUsers().then((result) => {
-        let toReach = 20;
+        let toReach = 30;
         var i = setInterval(function () {
 
             counter++;
@@ -88,7 +106,7 @@ function apiUsers(counter, c) {
 
 function apiSuppliers(counter, c) {
     apiHelper.getSuppliers().then((result) => {
-        let toReach = 30;
+        let toReach = 40;
         var i = setInterval(function () {
 
             counter++;
@@ -106,7 +124,7 @@ function apiSuppliers(counter, c) {
 
 function apiLogs(counter, c) {
     apiHelper.getLogs().then(() => {
-        let toReach = 40;
+        let toReach = 50;
         var i = setInterval(function () {
             counter++;
             c++;

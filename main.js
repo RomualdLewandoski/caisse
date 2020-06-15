@@ -110,7 +110,6 @@ knex.migrate.currentVersion().then((r) => {
 })
 
 
-// Reload index.html everytime the source files change
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
