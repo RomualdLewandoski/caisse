@@ -15,7 +15,7 @@ async function updateLoop() {
     setInterval(doUpdate, (30 * 1000))
 }
 
-async function doUpdate() {
+async function doUpdate(isloading = false) {
     loggerUpdateThread.log("Call UpdateThread..")
 
     let connection;
@@ -79,6 +79,9 @@ async function doUpdate() {
 
                         }
                         await apiHelper.getLogId(obj.idLog).then(() => {
+                            apiHelper.getLogs().then(() => {
+                                console.log("Update Logs from site")
+                            })
                         })
                         await deleteLog(row)
                     }
@@ -91,18 +94,15 @@ async function doUpdate() {
             }
 
         }
-        apiHelper.getPerms().then(() => {
-            console.log("Update perms from site")
-        })
-        apiHelper.getUsers().then(() => {
-            console.log("Update User from site")
-        })
-        apiHelper.getSuppliers().then(() => {
-            console.log("Update Supplier from site")
-        })
-        apiHelper.getLogs().then(() => {
-            console.log("Update Logs from site")
-        })
+        if (!isloading) {
+            apiHelper.getPerms().then(() => {
+            })
+            apiHelper.getUsers().then(() => {
+            })
+            apiHelper.getSuppliers().then(() => {
+            })
+        }
+
     }
 
 }
