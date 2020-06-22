@@ -27,8 +27,17 @@ const configFolder = configDir + "/config"
 const errorFolder = configDir + "/error"
 const errFile = localStorage.getItem('errFile')
 var database = configFolder + "/database.db";
+var List = require("collections/list");
+var Map = require("collections/map");
 
 var user;
+
+var deleteList = new List();
+var logList = new List();
+var permsMap = new Map();
+var usersMap = new Map();
+var suppliersMap = new Map();
+
 /**
  * HELPER SCRIPTS
  */
@@ -45,6 +54,7 @@ const knex = require("knex")({
         filename: database
     }
 });
+const mapManager = require('./scripts/Helper/mapManager')
 
 
 var isDev = localStorage.getItem('dev') == "true";
@@ -83,7 +93,30 @@ const leftBar = require('./scripts/Back/leftBar')
 
 
 /**
+ * MANAGERS
+ */
+const permsManager = require('./scripts/manager/permsManager')
+const usersManager = require('./scripts/manager/usersManager')
+const suppliersManager = require('./scripts/manager/suppliersManager')
+const logsManager = require('./scripts/manager/logsManager')
+const deleteManager = require('./scripts/manager/deleteManager')
+
+/**
  * METHODS
  */
 ui.initUi();
+
+async function loadMaps() {
+    await mapManager.loadLog().then(() => {
+    })
+
+    await permsManager.loadPerms()
+    await usersManager.loadUsers()
+    await mapManager.loadSuppliers().then(() => {
+    })
+}
+
+loadMaps()
 setup.initSetup();
+
+

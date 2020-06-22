@@ -114,17 +114,36 @@ function apiSuppliers(counter, c) {
             $(".loading-page .counter h1").html(c + "%");
             $(".loading-page .counter hr").css("width", c + "%");
             if (counter == toReach) {
-                $('#loadingAction').text("Récupération des logs");
+                $('#loadingAction').text("Récupération de l'historique de suppression");
                 clearInterval(i);
-                apiLogs(counter, c)
+                apiDelete(counter, c);
             }
         }, 50)
     })
 }
 
+function apiDelete(counter, c) {
+    apiHelper.loadDeleteList().then(() => {
+        apiHelper.getDelete().then(() => {
+            let toReach = 50;
+            var i = setInterval(() => {
+                counter ++;
+                c++;
+                $(".loading-page .counter h1").html(c + "%");
+                $(".loading-page .counter hr").css("width", c + "%");
+                if (counter == toReach) {
+                    $('#loadingAction').text("Récupération des logs");
+                    clearInterval(i);
+                    apiLogs(counter, c)
+                }
+            })
+        })
+    })
+}
+
 function apiLogs(counter, c) {
     apiHelper.getLogs().then(() => {
-        let toReach = 50;
+        let toReach = 60;
         var i = setInterval(function () {
             counter++;
             c++;

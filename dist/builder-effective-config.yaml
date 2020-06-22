@@ -1,16 +1,17 @@
 directories:
   output: dist
   buildResources: build
-productName: TijaraShop-Caisse
-appId: fr.hazielkaos.tijarashop
-asar: false
+productName: TijaraShop Caisse/Gestion
+appId: TijaraShop Caisse/Gestion
+asar: true
 files:
   - filter:
       - '!{dist,.gitignore,.vscode,docs,dev-app-update.yml,.travis.yml,.nvmrc,.eslintrc.json,build.js}'
 win:
   icon: src/app/assets/images/icon.ico
   target:
-    - nsis
+    - target: nsis
+      arch: x64
 nsis:
   oneClick: false
   perMachine: false
@@ -19,4 +20,20 @@ nsis:
 publish:
   provider: github
   token: <stripped sensitive data>
+artifactName: '${productName}.${ext}'
+copyright: Copyright © 2020 Romuald Detrait
+mac:
+  target: dmg
+  category: public.app-category.games
+linux:
+  target: AppImage
+  maintainer: Romuald Detrait
+  vendor: Romuald Detrait
+  synopsis: Caisse et Gestion pour TijaraShop
+  description: ''
+  category: General
+compression: maximum
+extraResources:
+  - filter:
+      - libraries
 electronVersion: 8.0.3

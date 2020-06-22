@@ -8,6 +8,7 @@ const path = require('path')
 const url = require('url')
 const isDev = require('./src/scripts/Helper/isDev')
 const {autoUpdater} = require('electron-updater')
+const migrationInfo = require('./migrationInfo')
 
 if (isDev) {
     console.log("Devmod enabled")
@@ -97,10 +98,10 @@ var knex = require("knex")({
 /**
  * CREATE OUR TABLES HERE
  */
-const latestVersion = "20200611131715"
-knex.migrate.currentVersion().then((r) => {
+let latestVersion = migrationInfo.latestVersion;
+knex.migrate.currentVersion(knex).then((r) => {
     let currentVersion = r;
-    if (currentVersion < latestVersion) {
+    if (currentVersion == "none" || currentVersion < latestVersion) {
         knex.migrate.latest().then(value => {
             console.log("Database migrated to latestVersion " + latestVersion)
         })
@@ -216,4 +217,3 @@ autoUpdater.on('update-downloaded', () => {
 ipcMain.on('restart_app', () => {
     autoUpdater.quitAndInstall();
 });
-

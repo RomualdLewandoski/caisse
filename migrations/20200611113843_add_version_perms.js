@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-  return knex.table('PermissionModel', function (table) {
+  return knex.schema.table('PermissionModel', function (table) {
       table.timestamp('version')
   })
 };

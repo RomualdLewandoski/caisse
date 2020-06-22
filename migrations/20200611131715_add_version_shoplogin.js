@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-    return knex.table('ShopLogin', function (table) {
+    return knex.schema.table('ShopLogin', function (table) {
         table.timestamp('version')
     })
 };

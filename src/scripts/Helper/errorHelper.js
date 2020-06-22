@@ -1,6 +1,4 @@
 module.exports.log = function (action, __OBFID = "null", err) {
-    //todo here we ll generate our error and append it to file
-    // todo then we ll generate an alert to say an internal error was encountered it has been logged on file
     var file = errorFolder + "/" + errFile;
     let d = new Date();
     var content =

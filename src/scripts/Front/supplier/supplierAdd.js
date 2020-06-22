@@ -65,7 +65,7 @@ async function saveAddSupplier() {
     let notes = $('#supplierAddNotes').val()
     let isActive = $('#supplierAddIsActive').is(':checked')
 
-    if (societyName == "" || firstName == "" || lastName == "") {
+    if (societyName == "") {
         swal('Erreur', "Des champs sont manquants dans le formulaire de création du fournisseur", 'error')
     } else {
         if (siret != "" && await getWhere("siret", siret) != null) {

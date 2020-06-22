@@ -11,7 +11,8 @@
     "dist:mac": "npm run dist -- MAC",
     "dist:linux": "npm run dist -- LINUX",
     "deploy": "electron-builder build --win --publish always",
-    "rebuild": "electron-rebuild -f -w sqlite3"
+    "rebuild": "electron-rebuild -f -w sqlite3",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -24,12 +25,14 @@
     "electron": "^8.0.2",
     "electron-builder": "^20.19.2",
     "electron-rebuild": "^1.10.1",
-    "livereload": "^0.9.1"
+    "livereload": "^0.9.1",
+    "mocha": "^8.0.1"
   },
   "dependencies": {
     "@hyperapp/html": "^0.5.1",
     "bcrypt": "^4.0.1",
     "chosen-js": "^1.8.7",
+    "collections": "^5.1.11",
     "connect": "^3.7.0",
     "ejs": "^3.0.1",
     "ejs-electron": "^2.0.3",

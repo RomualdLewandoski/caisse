@@ -148,6 +148,7 @@ async function deleteSupplier(id) {
     let req = knex('Supplier').where('idSupplier', id).delete()
     await req.then((r) => {
         result = true;
+        //todo ici on va supprimer de la map supplier notre fournisseur
     }).catch((err) => {
         let __OBFID = "7768abd5-2ff6-462e-a595-2749fadbc7f1"
         errorHelper.log("Error while deleting supplier on localBase ", __OBFID, err)

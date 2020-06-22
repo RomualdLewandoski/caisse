@@ -5,3 +5,5 @@ electron-builder.yml
 dist/win-unpacked/resources/app-update.yml
 node_modules/
 node_modules
+dist/
+dist

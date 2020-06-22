@@ -48,11 +48,16 @@ async function doUpdate(isloading = false) {
 
                     let obj = JSON.parse(result)
                     if (obj.state == 0) {
-                        let __OBFID = "3199c6fd-8ba0-4e2d-a3ea-dcde2ebe44df"
-                        errorHelper.log("Api updater send error", __OBFID, obj.error)
+                        if (obj.error == "Supplier Not found while trying delete") {
+                            alert("Attention le fournisseur n'avais pas d'identiifiant sur le site, il est possible qu'il ai déja été supprimé ")
+                        } else {
+                            let __OBFID = "3199c6fd-8ba0-4e2d-a3ea-dcde2ebe44df"
+                            errorHelper.log("Api updater send error", __OBFID, obj.error)
+                        }
                         await deleteLog(row)
                     } else {
                         if (obj.action == "AddSupplier") {
+                            suppliers.set(parseInt(obj.idWp), "1970-01-01")
                             knex("Supplier").where('societyName', obj.societyName).update({
                                 idWp: obj.idWp
                             }).then((r) => {
@@ -61,16 +66,24 @@ async function doUpdate(isloading = false) {
                                 errorHelper.log("Api updater update idWp for add supplier", __OBFID, err)
                             })
                         } else if (obj.action == "delete") {
-                            //todo ici on va faire le delete de l'entrée dans la table
-                            console.log(obj)
                             let table, idWp;
                             let temp = getTable(obj.type);
                             if (temp != null) {
-                                console.log(temp)
                                 table = temp.table
                                 idWp = temp.idWp
                                 let req = knex(table).where(idWp, obj.targetIdLog).delete()
                                 await req.then(() => {
+                                    switch (obj.type.toLowerCase()) {
+                                        case "permissionmodel":
+                                            permsMap.delete(parseInt(obj.targetIdLog))
+                                            break;
+                                        case "suppliermodel":
+                                            suppliers.delete(parseInt(obj.targetIdLog))
+                                            break;
+                                        case "usermodel":
+                                            usersMap.delete(parseInt(obj.targetIdLog))
+                                            break;
+                                    }
                                 }).catch((err) => {
                                     let __OBFID = "2a4fd490-fba8-435c-8f6f-b190dfe791a1"
                                     errorHelper.log("Delete entry after rollback", __OBFID, err)
@@ -100,6 +113,8 @@ async function doUpdate(isloading = false) {
             apiHelper.getUsers().then(() => {
             })
             apiHelper.getSuppliers().then(() => {
+            })
+            apiHelper.getDelete().then(() => {
             })
         }
 
@@ -204,5 +219,6 @@ module.exports = {
     createTables,
     updateLoop,
     doUpdate,
-    addToThread
+    addToThread,
+    getTable
 }
