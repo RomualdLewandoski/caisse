@@ -21,7 +21,7 @@
   "author": "Romuald Detrait",
   "devDependencies": {
     "cross-env": "^6.0.3",
-    "electron": "^8.0.2",
+    "electron": "^18.3.7",
     "electron-builder": "^20.19.2",
     "electron-rebuild": "^1.10.1",
     "livereload": "^0.9.1"
